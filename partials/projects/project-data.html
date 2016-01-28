@@ -1,0 +1,41 @@
+
+<div class="section">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-2">
+            <div class="panel panel-default">
+               <div class="panel-body">
+                  <p></p>
+                  <ul class="nav nav-pills nav-stacked">
+                     <li class="bg-change" ng-class="{active: datatab== 'web'}" >
+                        <a href="#" ng-click="setdataTab('web')"><i class="fa fa-fw fa-globe"></i>Web</a>
+                     </li>
+                     <li class="bg-change" ng-class="{active: datatab== 'facebook'}">
+                        <a href="#" ng-click="setdataTab('facebook')"><i class="fa fa-fw fa-facebook"></i>Facebook</a>
+                     </li>
+                     <li class="bg-change" ng-class="{active: datatab== 'twitter'}">
+                        <a href="#"  ng-click="setdataTab('twitter')"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                     </li>
+                     <li class="bg-change" ng-class="{active: datatab== 'instagram'}">
+                        <a href="#" ng-click="setdataTab('instagram')"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                     </li>
+                     <li class="bg-change" ng-class="{active: datatab== 'database'}">
+                        <a href="#" ng-click="setdataTab('database')"><i class="fa fa-fw fa-database"></i>Database</a>
+                     </li>
+                  </ul>
+                  <p></p>
+               </div>
+            </div>
+         </div>
+        <projectdatawebform  ng-switch-when="web"></projectdatawebform>
+        <projectdatafbform  ng-switch-when="facebook"></projectdatafbform>
+        <projectdatatwitterform  ng-switch-when="twitter"></projectdatatwitterform>
+        <projectdatainstagramform  ng-switch-when="instagram"></projectdatainstagramform>
+   </div>
+  </div>
+</div>
+
+<projectdataweblist ng-switch-when="web"></projectdataweblist>
+<projectdatafblist ng-switch-when="facebook"></projectdatafblist>
+<projectdatatwitterlist ng-switch-when="twitter"></projectdatatwitterlist>
+<projectdatainstagramlist  ng-switch-when="instagram"></projectdatainstagramlist>
