@@ -4,31 +4,30 @@
             <div class="col-md-12">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-3">
-                            <a class="btn btn-primary">
+                        <div class="col-md-2">
+                            <a class="btn btn-primary" ng-click="newProject()">
                                 <i class="fa fa-fw fa-plus-circle"></i>New Project
                             </a>
                         </div>
-                        <div class="col-md-5 text-left">
+                        <div class="col-md-3 text-left">
                             <div class="form-group has-warning">
-                                <input type="text" class="form-control input-sm" placeholder="Search  Projects" />
+                                <input type="text" class="form-control input-sm" ng-model="search" placeholder="Search  Projects" />  
                                 </div>
+
+                         </div>
+                          <div class="col-md-1 ">
+                            <div class="form-group">
+                                 <input type="number" min="1" max="100" class="form-control input-sm" ng-model="pageSize"  />
                             </div>
-                        </div>
+                          </div>
+                       </div>
                     </div>
                     <table class="table table-bordered table-condensed table-hover table-striped">
-                        <tbody>
+                        <tbody dir-paginate="project in projects| orderBy:sortKey:reverse|filter:search|itemsPerPage:pageSize" current-page="currentPage">
                             <tr>
-                                <td>1</td>
-                                <td>Mark</td>
-                                <td>Otto 
-                                    <span style="line-height: 22.8571px;">Otto</span>Otto
-                                    <span style="line-height: 22.8571px;">Otto</span>Otto 
-                                    <span style="line-height: 22.8571px;">Otto</span>
-                                    <span style="line-height: 22.8571px;">Otto</span>Otto
-                                    <span style="line-height: 22.8571px;">Otto</span>
-                                    <span style="line-height: 22.8571px;">Otto</span>OttoOtto
-                                </td>
+                                <td>{{ ($index + 1) + (currentPage - 1) * pageSize}}</td>
+                                <td>{{project.project_name}}</td>
+                                <td>{{project.project_description}}</td>
                                 <td>
                                     <a href="#" class="btn   btn-md">
                                         <i class="fa fa-fw fa-clipboard"></i>Domains
@@ -45,46 +44,31 @@
                                     <a href="#" class="btn   btn-md">
                                         <i class="fa fa-fw fa-bar-chart"></i>Reports
                                     </a>
-                                    <a href="#" class="btn  btn-md">
+                                    <a href="#" class="btn  btn-md"  ng-click="editProject(project.id)">
                                         <i class="fa fa-fw fa-edit"></i>Edit
                                     </a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>
-                                    <a href="#" class="btn   btn-md">
-                                        <i class="fa fa-fw fa-clipboard"></i>Domains
-                                    </a>
-                                    <a href="#" class="btn   btn-md">
-                                        <i class="fa fa-fw fa-copy"></i>Ontologies
-                                    </a>
-                                    <a href="#" class="btn   btn-md">
-                                        <i class="fa fa-fw fa-book"></i>Data
-                                    </a>
-                                    <a href="#" class="btn  btn-md">
-                                        <i class="fa fa-fw fa-code-fork"></i>Tools
-                                    </a>
-                                    <a href="#" class="btn btn-md">
-                                        <i class="fa fa-fw fa-bar-chart"></i>Reports
-                                    </a>
-                                    <a href="#" class="btn   btn-md">
-                                        <i class="fa fa-fw fa-edit"></i>Edit
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
+                                                     </tbody>
                         <thead>
                             <tr>
                                 <th class="btn-xs">#</th>
-                                <th class="btn-xs">Project Name</th>
-                                <th class="btn-xs">Description</th>
+                                <th class="btn-xs" ng-click="sort('project_name')" >Project Name
+                                    <i class="fa fa-fw -circle-o fa-angle-down"></i>
+                                    <i class="fa fa-fw -circle-o fa-angle-down" ng-show="sortKey=='name'"  ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></i> 
+                                </th>
+                                <th class="btn-xs" >Description</th>
                                 <th class="btn-xs">Actions</th>
                             </tr>
                         </thead>
                     </table>
+                    <div class="col-md-10 text-center">
+            <dir-pagination-controls
+        max-size="5"
+        direction-links="true"
+        boundary-links="true" >
+    </dir-pagination-controls>
+          </div>
                 </div>
             </div>
         </div>

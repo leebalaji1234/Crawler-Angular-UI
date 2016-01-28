@@ -8,15 +8,29 @@
                </div>
                <div class="panel-body">
                   <div class="col-md-6">
-                     <form role="form">
-                        <div class="form-group">
-                            <label class="control-label" for="exampleInputEmail1">Project Name</label><input class="form-control" id="exampleInputEmail1" placeholder="Enter project name" type="email" />    
+                  <form role="form"  name="projectForm"  ng-submit="updateProject()"   novalidate >
+                        <div class="form-group" ng-class="{ 'has-error' : projectForm.project_name.$invalid && !projectForm.project_name.$pristine }">
+                            <label class="control-label" for="projectname">Project Name</label><input class="form-control" id="projectname" name="project_name" ng-model="project.project_name"  ng-minlength="1" ng-maxlength="200"  ng-change="verifyDuplicate()" placeholder="Enter project name" type="text" required />    
+                            <p ng-show="projectForm.project_name.$error.required && projectForm.project_name.$invalid && !projectForm.project_name.$pristine " class="help-block" >
+                    Project name is required !
+                            </p>
+                            <p ng-show="projectForm.project_name.$error.maxlength && projectForm.project_name.$invalid && !projectForm.project_name.$pristine" class="help-block" >
+                                Maximum length allowed is 200 !
+                            </p>
+                            <p ng-show="projectForm.project_name.$error.duplicate && projectForm.project_name.$invalid && !projectForm.project_name.$pristine"  class="help-block" >
+                                Duplicates not allowed !
+                            </p>
+
                         </div>
-                        <div class="form-group">
-                            <label class="control-label" for="exampleInputPassword1">Description</label>
-                            <textarea class="form-control" id="exampleInputPassword1" placeholder="Project description" ></textarea>
+                        <div class="form-group" ng-class="{ 'has-error' : projectForm.project_decription.$invalid && !projectForm.project_decription.$pristine }">
+                            <label class="control-label" for="project_decription">Project Description</label>
+                            <textarea class="form-control" placeholder="Description here" class="form-control" ng-model="project.project_description" ng-maxlength="900" name="project_decription" ></textarea>
+                            <p ng-show="projectForm.project_decription.$error.maxlength && projectForm.project_decription.$invalid && !projectForm.project_decription.$pristine" class="help-block" >
+                    Maximum length allowed is 900 !
+                </p>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                         <button type="submit" class="btn btn-default btn-primary" ng-disabled="projectForm.$invalid">Submit</button>
+               <button type="reset" class="btn btn-default btn-primary" ng-click="reset()" >Cancel</button>
                      </form>
                   </div>
                </div>

@@ -1,37 +1,44 @@
 angular.module('project-directives', ['angularUtils.directives.dirPagination','ngResource'])
-.directive("projects", function() {
+.directive("projectlist", function() {
   return {
-    restrict: 'E',
+    restrict: 'E', 
     templateUrl: "partials/projects/projects-list.html",
     controller:function($scope,$http,ProjectsFactory,ProjectFactory,$location){
     	 $scope.projects = [];
        $scope.currentPage = 1;
        $scope.pageSize = 2;
        $scope.domains = [];
-    	 // $http.get('js/projects.json').success(function(data){
-      //          $scope.projects = data;
-      //   });
-        $scope.projects = ProjectsFactory.query(); 
+       $scope.projects = ProjectsFactory.query(); 
+        
+    	  
        $scope.sort = function(keyname){
-        $scope.sortKey = keyname;   //set the sortKey to the param passed
-        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+        $scope.sortKey = keyname;   
+        $scope.reverse = !$scope.reverse;  
        };
 
        $scope.editProject = function (projectId) {
-            // $location.path('/project-detail/' + projectId);
-
+             
             $scope.project = ProjectFactory.show({id: projectId});
             $scope.projectForm.project_name.$setValidity('duplicate',true);
        };
        $scope.newProject = function () {
-            // $location.path('/project-detail/' + projectId);
+            
             $scope.project = {};
        };
+       $scope.$watch('projectForm', function(projectForm) {
+          if(projectForm) {  
+              console.log('projectForm in Scope');
+          }
+          else { 
+
+              console.log('projectForm in out of Scope');
+          }        
+      });
 
     }
   };
 })
-.directive("project", function() {
+.directive("projectform", function() {
   return {
     restrict: 'E',
     templateUrl: "partials/projects/project.html",
@@ -102,24 +109,52 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
   return {
     restrict: 'E',
     templateUrl: "partials/projects/project-data.html",
-    controller:function(){
-      
+    controller:function($scope,ChannelsFactory){
+      $scope.channels = [];
+      $scope.channels = ChannelsFactory.query(); 
+
     }
   };
 }).directive("projectdatawebform", function() {
   return {
     restrict: 'E',
     templateUrl: "partials/projects/project-data-web.html",
-    controller:function(){
-      
+    controller:function($scope,SchedulersFactory,DataWebsFactory,DataWebFactory){
+      $scope.schedulers = [];
+      $scope.schedulers = SchedulersFactory.query();
+      $scope.dataweb= {};
     }
   };
 }).directive("projectdataweblist", function() {
   return {
     restrict: 'E',
     templateUrl: "partials/projects/project-data-web-list.html",
-    controller:function(){
+    controller:function($scope,DataWebsFactory,DataWebFactory){
       
+      $scope.datawebs = [];
+      $scope.currentPage = 1;
+      $scope.pageSize = 2; 
+      $scope.datawebs = DataWebsFactory.query(); 
+        
+        
+       $scope.editDataWeb = function (dataWebId) {
+             
+            $scope.dataweb = DataWebFactory.show({id: dataWebId});
+            $scope.datawebForm.url_collection_name.$setValidity('duplicate',true);
+       };
+       $scope.newDataWeb = function () {
+            
+            $scope.dataweb = {};
+       };
+       $scope.$watch('datawebForm', function(datawebForm) {
+          if(datawebForm) {  
+              console.log('datawebForm in Scope');
+          }
+          else { 
+
+              console.log('datawebForm in out of Scope');
+          }        
+      });
     }
   };
 }).directive("projectdatafbform", function() {
@@ -170,5 +205,26 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
       
     }
   };
+}).factory('ChannelsFactory', function ($resource) { 
+    return $resource($appconfig.host + '/channels.json', {}, {
+        query: { method: 'GET', isArray: true },
+        create: { method: 'POST' }
+    })
+}).factory('SchedulersFactory', function ($resource) { 
+    return $resource($appconfig.host + '/scheduler_types.json', {}, {
+        query: { method: 'GET', isArray: true },
+        create: { method: 'POST' }
+    })
+}).factory('DataWebFactory', function ($resource) {
+    return $resource($appconfig.host + '/source_webs/:id.json', {}, {
+        show: { method: 'GET' },
+        update: { method: 'PUT', params: {id: '@id'} },
+        delete: { method: 'DELETE', params: {id: '@id'} }
+    })
+}).factory('DataWebsFactory', function ($resource) { 
+    return $resource($appconfig.host + '/source_webs.json', {}, {
+        query: { method: 'GET', isArray: true },
+        create: { method: 'POST' }
+    })
 });
 

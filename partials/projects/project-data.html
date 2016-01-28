@@ -10,15 +10,14 @@
                      <li class="bg-change" ng-class="{active: datatab== 'web'}" >
                         <a href="#" ng-click="setdataTab('web')"><i class="fa fa-fw fa-globe"></i>Web</a>
                      </li>
-                     <li class="bg-change" ng-class="{active: datatab== 'facebook'}">
-                        <a href="#" ng-click="setdataTab('facebook')"><i class="fa fa-fw fa-facebook"></i>Facebook</a>
+                     </ul>
+                     <ul class="nav nav-pills nav-stacked" ng-repeat="channel in channels">
+                     <li class="bg-change" ng-class="{active: datatab== channel.channel_name}">
+                        <a href="#" ng-click="setdataTab(channel.channel_name)"><i class="fa fa-fw fa-{{channel.channel_name | lowercase}}"></i>{{channel.channel_name}}</a>
                      </li>
-                     <li class="bg-change" ng-class="{active: datatab== 'twitter'}">
-                        <a href="#"  ng-click="setdataTab('twitter')"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
-                     </li>
-                     <li class="bg-change" ng-class="{active: datatab== 'instagram'}">
-                        <a href="#" ng-click="setdataTab('instagram')"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
-                     </li>
+                     
+                     </ul>
+                     <ul class="nav nav-pills nav-stacked">
                      <li class="bg-change" ng-class="{active: datatab== 'database'}">
                         <a href="#" ng-click="setdataTab('database')"><i class="fa fa-fw fa-database"></i>Database</a>
                      </li>
@@ -27,15 +26,15 @@
                </div>
             </div>
          </div>
-        <projectdatawebform  ng-switch-when="web"></projectdatawebform>
-        <projectdatafbform  ng-switch-when="facebook"></projectdatafbform>
-        <projectdatatwitterform  ng-switch-when="twitter"></projectdatatwitterform>
-        <projectdatainstagramform  ng-switch-when="instagram"></projectdatainstagramform>
+        <projectdatawebform  ng-show="checkDataTab('web')" ></projectdatawebform>
+        <projectdatafbform  ng-show="checkDataTab('Facebook')" ></projectdatafbform>
+        <projectdatatwitterform ng-show="checkDataTab('Twitter')"></projectdatatwitterform>
+        <projectdatainstagramform  ng-show="checkDataTab('Instagram')" ></projectdatainstagramform>
    </div>
   </div>
 </div>
 
-<projectdataweblist ng-switch-when="web"></projectdataweblist>
-<projectdatafblist ng-switch-when="facebook"></projectdatafblist>
-<projectdatatwitterlist ng-switch-when="twitter"></projectdatatwitterlist>
-<projectdatainstagramlist  ng-switch-when="instagram"></projectdatainstagramlist>
+<projectdataweblist ng-show="checkDataTab('web')"></projectdataweblist>
+<projectdatafblist ng-show="checkDataTab('facebook')"></projectdatafblist>
+<projectdatatwitterlist ng-show="checkDataTab('twitter')"></projectdatatwitterlist>
+<projectdatainstagramlist  ng-show="checkDataTab('instagram')"></projectdatainstagramlist>

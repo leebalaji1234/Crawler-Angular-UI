@@ -4,7 +4,7 @@ angular.module('tab-directives', [])
     restrict: 'E',
     templateUrl: "partials/tab.html",
     controller:function($scope,$location){ 
-      $scope.projecttab = '';
+      $scope.projecttab = 'project';
       $scope.datatab = 'web';
 
       if($location.path() != ''){
@@ -12,7 +12,12 @@ angular.module('tab-directives', [])
       }else{
         $scope.tab = "/dashboard";
       }
-      
+      $scope.checkProjectTab = function(tabName){
+        return $scope.projecttab === tabName;
+      }
+      $scope.checkDataTab = function(tabName){
+        return $scope.datatab === tabName;
+      }
       $scope.setdataTab = function(tabName){
         $scope.datatab = tabName; 
       }
@@ -23,7 +28,7 @@ angular.module('tab-directives', [])
 
       $scope.setTab = function(menuName){ 
         $scope.tab = "/"+menuName;
-        $scope.projecttab = '';
+        $scope.projecttab = 'project';
         $scope.datatab = 'web';
       };
 
