@@ -5,7 +5,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-2">
-                            <a class="btn btn-primary" ng-click="newProject()">
+                            <a class="btn btn-primary btn-sm" ng-click="newProject()">
                                 <i class="fa fa-fw fa-plus-circle"></i>New Project
                             </a>
                         </div>
@@ -29,19 +29,19 @@
                                 <td>{{project.project_name}}</td>
                                 <td>{{project.project_description}}</td>
                                 <td>
-                                    <a href="#" class="btn   btn-md">
+                                    <a href="#" ng-click="setSelectedProject(project.id,'domains')"   class="btn   btn-md">
                                         <i class="fa fa-fw fa-clipboard"></i>Domains
                                     </a>
-                                    <a href="#" class="btn  btn-md">
+                                    <a href="#" ng-click="setSelectedProject(project.id,'ontologies')" class="btn  btn-md">
                                         <i class="fa fa-fw fa-copy"></i>Ontologies
                                     </a>
-                                    <a href="#" class="btn  btn-md">
+                                    <a href="#"   ng-click="setSelectedProject(project.id,'data')" class="btn  btn-md">
                                         <i class="fa fa-fw fa-book"></i>Data
                                     </a>
-                                    <a href="#" class="btn  btn-md">
+                                    <a href="#" ng-click="setSelectedProject(project.id,'tools')" class="btn  btn-md">
                                         <i class="fa fa-fw fa-code-fork"></i>Tools
                                     </a>
-                                    <a href="#" class="btn   btn-md">
+                                    <a href="#" ng-click="setSelectedProject(project.id,'reports')" class="btn   btn-md">
                                         <i class="fa fa-fw fa-bar-chart"></i>Reports
                                     </a>
                                     <a href="#" class="btn  btn-md"  ng-click="editProject(project.id)">
@@ -54,8 +54,8 @@
                             <tr>
                                 <th class="btn-xs">#</th>
                                 <th class="btn-xs" ng-click="sort('project_name')" >Project Name
-                                    <i class="fa fa-fw -circle-o fa-angle-down"></i>
-                                    <i class="fa fa-fw -circle-o fa-angle-down" ng-show="sortKey=='name'"  ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></i> 
+                                     
+                                    <i class="fa fa-fw -circle-o fa-angle-down"    ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></i> 
                                 </th>
                                 <th class="btn-xs" >Description</th>
                                 <th class="btn-xs">Actions</th>

@@ -60,20 +60,20 @@
                 <div class="row animate-switch" ng-switch-when="/projects">
                     <div class="col-md-12 hidden-sm hidden-xs" >
                         <ul class="nav nav-justified nav-pills">
-                            <li class="bg-change" ng-class="{active: projecttab== 'domains'}" >
-                                <a href="#" ng-click="setprojectTab('domains')"><i class="fa fa-fw fa-clipboard"></i>Domains</a>
+                            <li class="bg-change"  ng-class="{active: projecttab== 'domains', disabled: !project_sel_id}" >
+                                <a href="#" ng-click="!project_sel_id || setprojectTab('domains')" ng-class="{disabled: !project_sel_id}" ><i class="fa fa-fw fa-clipboard"></i>Domains</a>
                             </li>
-                            <li class="bg-change" ng-class="{active: projecttab== 'ontologies'}">
-                                <a href="#" ng-click="setprojectTab('ontologies')"><i class="fa fa-fw fa-copy"></i>Ontologies</a>
+                            <li class="bg-change"   ng-class="{active: projecttab== 'ontologies', disabled: !project_sel_id}">
+                                <a href="#" ng-click="!project_sel_id ||setprojectTab('ontologies')"><i class="fa fa-fw fa-copy"></i>Ontologies</a>
                             </li>
-                            <li class=" bg-change" ng-class="{active: projecttab== 'data'}">
-                                <a href="#" ng-click="setprojectTab('data')"><i class="fa fa-fw fa-book"></i>Data</a>
+                            <li class=" bg-change" ng-class="{active: projecttab== 'data', disabled: !project_sel_id}">
+                                <a href="#" ng-click="!project_sel_id ||setprojectTab('data')"><i class="fa fa-fw fa-book"></i>Data</a>
                             </li>
-                            <li class="bg-change" ng-class="{active: projecttab== 'tools'}">
-                                <a href="#" ng-click="setprojectTab('tools')"><i class="fa fa-fw fa-code-fork"></i>Tools</a>
+                            <li class="bg-change" ng-class="{active: projecttab== 'tools', disabled: !project_sel_id}">
+                                <a href="#" ng-click="!project_sel_id ||setprojectTab('tools')"><i class="fa fa-fw fa-code-fork"></i>Tools</a>
                             </li>
-                            <li class="bg-change" ng-class="{active: projecttab== 'reports'}">
-                                <a href="#" ng-click="setprojectTab('reports')"><i class="fa fa-fw fa-bar-chart"></i>Reports</a>
+                            <li class="bg-change" ng-class="{active: projecttab== 'reports', disabled: !project_sel_id}">
+                                <a href="#" ng-click="!project_sel_id ||setprojectTab('reports')"><i class="fa fa-fw fa-bar-chart"></i>Reports</a>
                             </li>
                         </ul>
                     </div>

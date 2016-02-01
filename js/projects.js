@@ -122,7 +122,49 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
     controller:function($scope,SchedulersFactory,DataWebsFactory,DataWebFactory){
       $scope.schedulers = [];
       $scope.schedulers = SchedulersFactory.query();
-      $scope.dataweb= {};
+      $scope.dataweb= {}; 
+         
+        $scope.resetweb = function() {
+            if($scope.datawebForm) {  
+              $scope.datawebForm.$setPristine();
+              // $scope.projectForm.$setUntouched();
+            } 
+        };
+
+        $scope.updateWeb = function () {
+           
+          if($scope.datawebForm.$valid){
+            if($scope.dataweb.id == "" || $scope.dataweb.id == undefined){
+              DataWebsFactory.create($scope.dataweb,function(response){ 
+                 $scope.datawebs = DataWebsFactory.query();
+                 $scope.dataweb={};
+                 $scope.resetweb();
+              });
+            }else{
+              DataWebFactory.update($scope.dataweb,function(response){ 
+                 $scope.dataweb={};
+                 $scope.resetweb();
+                 $scope.datawebs = DataWebsFactory.query();
+              });
+
+            }
+          }
+            // $location.path('/user-list');
+        }
+        $scope.verifyWebDuplicate = function() {
+           var sorted,isDuplicate, i; 
+            sorted = $scope.datawebs;  
+            for(i = 0; i < sorted.length; i++) {  
+              
+              if(($scope.dataweb.id == "" || $scope.dataweb.id != undefined) && ($scope.dataweb.id != sorted[i].id)){ 
+                isDuplicate = ((sorted[i] && sorted[i].url_collection_name == $scope.dataweb.url_collection_name));
+              }else{
+                isDuplicate = ((sorted[i] && sorted[i].url_collection_name == $scope.dataweb.url_collection_name));
+              }
+             $scope.datawebForm.url_collection_name.$setValidity('duplicate',!isDuplicate);
+             if (isDuplicate == true){return false;}
+           }
+        }
     }
   };
 }).directive("projectdataweblist", function() {
@@ -132,16 +174,25 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
     controller:function($scope,DataWebsFactory,DataWebFactory){
       
       $scope.datawebs = [];
-      $scope.currentPage = 1;
-      $scope.pageSize = 2; 
+      $scope.webcurrentPage = 1;
+      $scope.webpageSize = 2; 
       $scope.datawebs = DataWebsFactory.query(); 
-        
+       $scope.sortweb = function(keyname){
+        $scope.websortKey = keyname;   
+        $scope.webreverse = !$scope.webreverse;  
+       }; 
         
        $scope.editDataWeb = function (dataWebId) {
              
             $scope.dataweb = DataWebFactory.show({id: dataWebId});
             $scope.datawebForm.url_collection_name.$setValidity('duplicate',true);
        };
+       $scope.deleteDataWeb = function (dataWebId) {
+            if(confirm('Are you sure want to delete?')){
+              DataWebFactory.delete({id: dataWebId});
+              $scope.datawebs = DataWebsFactory.query();
+            }  
+        };
        $scope.newDataWeb = function () {
             
             $scope.dataweb = {};
@@ -161,8 +212,51 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
   return {
     restrict: 'E',
     templateUrl: "partials/projects/project-data-facebook.html",
-    controller:function(){
-      
+    controller:function($scope){
+     
+      // $scope.datafb= {}; 
+         
+      //   $scope.resetfb = function() {
+      //       if($scope.datafbForm) {  
+      //         $scope.datafbForm.$setPristine();
+      //         // $scope.projectForm.$setUntouched();
+      //       } 
+      //   };
+
+      //   $scope.updatefb = function () {
+           
+      //     if($scope.datafbForm.$valid){
+      //       if($scope.datafb.id == "" || $scope.datafb.id == undefined){
+      //         DataFbsFactory.create($scope.datafb,function(response){ 
+      //            $scope.datafbs = DataFbsFactory.query();
+      //            $scope.datafb={};
+      //            $scope.resetfb();
+      //         });
+      //       }else{
+      //         DataFbFactory.update($scope.datafb,function(response){ 
+      //            $scope.datafb={};
+      //            $scope.resetfb();
+      //            $scope.datafbs = DataFbsFactory.query();
+      //         });
+
+      //       }
+      //     }
+      //       // $location.path('/user-list');
+      //   }
+      //   $scope.verifyfbDuplicate = function() {
+      //      var sorted,isDuplicate, i; 
+      //       sorted = $scope.datafbs;  
+      //       for(i = 0; i < sorted.length; i++) {  
+              
+      //         if(($scope.datafb.id == "" || $scope.datafb.id != undefined) && ($scope.datafb.id != sorted[i].id)){ 
+      //           isDuplicate = ((sorted[i] && sorted[i].url_collection_name == $scope.dataweb.url_collection_name));
+      //         }else{
+      //           isDuplicate = ((sorted[i] && sorted[i].url_collection_name == $scope.dataweb.url_collection_name));
+      //         }
+      //        $scope.datawebForm.url_collection_name.$setValidity('duplicate',!isDuplicate);
+      //        if (isDuplicate == true){return false;}
+      //      }
+      //   }
     }
   };
 }).directive("projectdatafblist", function() {

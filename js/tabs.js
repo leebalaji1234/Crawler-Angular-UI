@@ -3,10 +3,11 @@ angular.module('tab-directives', [])
   return {
     restrict: 'E',
     templateUrl: "partials/tab.html",
-    controller:function($scope,$location){ 
+    controller:function($scope,$location){
+      $scope.project_sel_id  = false;
+      $scope.projectselected = ""; 
       $scope.projecttab = 'project';
-      $scope.datatab = 'web';
-
+      $scope.datatab = 'web'; 
       if($location.path() != ''){
         $scope.tab = $location.path();
       }else{
@@ -30,6 +31,11 @@ angular.module('tab-directives', [])
         $scope.tab = "/"+menuName;
         $scope.projecttab = 'project';
         $scope.datatab = 'web';
+      };
+      $scope.setSelectedProject = function(selectedId,tabName){
+        $scope.project_sel_id = true;
+        $scope.projectselected  = selectedId;
+        $scope.setprojectTab(tabName);
       };
 
 
