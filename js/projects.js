@@ -212,37 +212,36 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
   return {
     restrict: 'E',
     templateUrl: "partials/projects/project-data-facebook.html",
-    controller:function($scope){
+    controller:function($scope,DataSocialsFactory){ 
+     $scope.datasocial= {}; 
      
-      // $scope.datafb= {}; 
-         
-      //   $scope.resetfb = function() {
-      //       if($scope.datafbForm) {  
-      //         $scope.datafbForm.$setPristine();
-      //         // $scope.projectForm.$setUntouched();
-      //       } 
-      //   };
+       $scope.resetSocial = function(formName) {
+            if($scope.formName) {  
+              $scope.formName.$setPristine();
+              // $scope.projectForm.$setUntouched();
+            } 
+        };
 
-      //   $scope.updatefb = function () {
+        // $scope.updateSocial = function (formName) {
            
-      //     if($scope.datafbForm.$valid){
-      //       if($scope.datafb.id == "" || $scope.datafb.id == undefined){
-      //         DataFbsFactory.create($scope.datafb,function(response){ 
-      //            $scope.datafbs = DataFbsFactory.query();
-      //            $scope.datafb={};
-      //            $scope.resetfb();
-      //         });
-      //       }else{
-      //         DataFbFactory.update($scope.datafb,function(response){ 
-      //            $scope.datafb={};
-      //            $scope.resetfb();
-      //            $scope.datafbs = DataFbsFactory.query();
-      //         });
+        //   if($scope.formName.$valid){
+        //     if($scope.datasocial.id == "" || $scope.datasocial.id == undefined){
+        //       DataSocialsFactory.create($scope.datasocial,function(response){ 
+        //          $scope.datasocials = DataSocialsFactory.query({project_id:$scope.project_id,channel_id:$scope.channel_id});
+        //          $scope.datasocial={};
+        //          $scope.resetSocial(formName);
+        //       });
+        //     }else{
+        //       // DataSocialFactory.update($scope.datasocial,function(response){ 
+        //       //    $scope.datasocial={};
+        //       //    $scope.resetSocial(formName);
+        //       //    $scope.datasocials = DataSocialsFactory.query({project_id:$scope.project_id,channel_id:$scope.channel_id});
+        //       // });
 
-      //       }
-      //     }
-      //       // $location.path('/user-list');
-      //   }
+        //     }
+        //   }
+        //     // $location.path('/user-list');
+        // }
       //   $scope.verifyfbDuplicate = function() {
       //      var sorted,isDuplicate, i; 
       //       sorted = $scope.datafbs;  
@@ -263,7 +262,18 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
   return {
     restrict: 'E',
     templateUrl: "partials/projects/project-data-facebook-list.html",
-    controller:function(){
+    controller:function($scope,DataSocialsFactory){
+      $scope.datasocials = []; 
+
+      $scope.listSocials = function(){
+        if(($scope.project_id != "" || $scope.project_id != undefined) && ($scope.channel_id != "" || $scope.channel_id != undefined) ){
+          dataParams = {project_id:$scope.project_id, channel_id:$scope.channel_id}; 
+          $scope.datasocials = DataSocialsFactory.query(dataParams); 
+        }
+      };
+
+      
+      
       
     }
   };
@@ -318,6 +328,11 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
 }).factory('DataWebsFactory', function ($resource) { 
     return $resource($appconfig.host + '/source_webs.json', {}, {
         query: { method: 'GET', isArray: true },
+        create: { method: 'POST' }
+    })
+}).factory('DataSocialsFactory', function ($resource) { 
+    return $resource($appconfig.host + '/projects/:project_id/channels/:channel_id/source_socials.json', {}, {
+        query: { method: 'GET', params:{project_id: '@project_id',channel_id: '@channel_id'},isArray: true },
         create: { method: 'POST' }
     })
 });

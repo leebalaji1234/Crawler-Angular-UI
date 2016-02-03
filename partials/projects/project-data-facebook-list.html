@@ -3,39 +3,37 @@
         <div class="row">
           <div class="col-md-12">
             <div class="container">
-              <div class="row">
-                <div class="col-md-3">
-                  <a class="btn btn-primary"><i class="fa fa-fw fa-plus-circle"></i>&nbsp;New Source Page</a>
+             <div class="row">
+                <div class="col-md-2">
+                  <a class="btn btn-primary btn-sm  " ng-click="newDataWeb()"><i class="fa fa-fw fa-plus-circle"></i> New Source</a>
                 </div>
-                <div class="col-md-5 text-left">
+                <div class="col-md-3 text-left">
                   <div class="form-group has-warning">
-                    <input type="text" class="form-control input-sm" placeholder="Search  Collections">
-                  </div>
+                  <input type="text" class="form-control input-sm" ng-model="search" placeholder="Search  Collections" />  
+                  </div> 
+               </div>
+               <div class="col-md-1 ">
+                            <div class="form-group">
+                                 <input type="number" min="1" max="100" class="form-control input-sm" ng-model="pageSize"  />
+                            </div>
                 </div>
-              </div>
             </div>
             <table class="table table-bordered table-condensed table-hover table-striped">
-              <tbody>
+              <tbody  dir-paginate="socialfb in datasocials| orderBy:sortKey:reverse|filter:search|itemsPerPage:pageSize" current-page="currentPage" pagination-id="fb">
                 <tr>
-                  <td>1</td>
-                  <td>Mark</td>
+                  <td>{{ ($index + 1) + (currentPage - 1) * pageSize}}</td>
+                  <td>{{socialfb.collection_name}}</td>
                   <td>
                     <span class="label label-success">Valid</span>
                   </td>
-                  <td></td>
+                  <td>{{socialfb.created_at}}</td>
                   <td>
                     <a href="#" class="btn  btn-md"><i class="fa fa-fw fa-eye"></i>&nbsp;View</a>
                     <a href="#" class="btn  btn-md"><i class="fa fa-fw fa-edit"></i> Edit</a>
                     <a href="#" class="btn  btn-md"><i class="fa fa-fw fa-trash"></i> Delete</a>
                   </td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Jacob</td>
-                  <td contenteditable="true"></td>
-                  <td></td>
-                  <td></td>
-                </tr>
+               
               </tbody>
               <thead>
                 <tr>
@@ -47,7 +45,14 @@
                 </tr>
               </thead>
             </table>
+           <div class="col-md-10 text-center">
+            <dir-pagination-controls
+        max-size="5"
+        direction-links="true"
+        boundary-links="true" pagination-id="fb" >
+    </dir-pagination-controls>
+          </div>
           </div>
         </div>
       </div>
-    </div
+    </div>

@@ -22,12 +22,12 @@
               <tbody dir-paginate="web in datawebs| orderBy:websortKey:webreverse|filter:websearch|itemsPerPage:webpageSize" pagination-id="web" current-page="webcurrentPage">
                 <tr>
                   <td>{{ ($index + 1) + (webcurrentPage - 1) * webpageSize}}</td>
-                  <td>{{web.url_collection_name}}</td>
-                  <td>
+                  <td class="text-center">{{web.url_collection_name}}</td>
+                  <td class="text-center">
                     <span class="label label-warning">In Progress</span>
                   </td>
-                  <td>{{web.created_at}}</td>
-                  <td>
+                  <td class="text-center">{{web.created_at}}</td>
+                  <td class="text-center">
                     <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-stop"></i> Stop Crawl</a>
                     <a href="#" ng-click="deleteDataWeb(web.id)" class="btn  btn-md"><i class="fa fa-fw fa-trash"></i> Remove</a>
                   </td>
@@ -37,12 +37,12 @@
               <thead>
                 <tr>
                   <th class="btn-xs">#</th>
-                  <th class="btn-xs" ng-click="sortweb('url_collection_name')" >Collection Name
+                  <th class="btn-xs text-center" ng-click="sortweb('url_collection_name')" >Collection Name
                     <i class="fa fa-fw -circle-o fa-angle-down"   ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></i>
                   </th>
-                  <th class="btn-xs">Processing Status</th>
-                  <th class="btn-xs" >Creation Time</th>
-                  <th class="btn-xs">Actions</th>
+                  <th class="btn-xs text-center">Processing Status</th>
+                  <th class="btn-xs text-center" >Creation Time</th>
+                  <th class="btn-xs text-center">Actions</th>
                 </tr>
               </thead>
             </table>

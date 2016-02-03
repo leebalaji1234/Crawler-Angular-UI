@@ -26,25 +26,47 @@
                         <tbody dir-paginate="project in projects| orderBy:sortKey:reverse|filter:search|itemsPerPage:pageSize" current-page="currentPage">
                             <tr>
                                 <td>{{ ($index + 1) + (currentPage - 1) * pageSize}}</td>
-                                <td>{{project.project_name}}</td>
-                                <td>{{project.project_description}}</td>
-                                <td>
-                                    <a href="#" ng-click="setSelectedProject(project.id,'domains')"   class="btn   btn-md">
-                                        <i class="fa fa-fw fa-clipboard"></i>Domains
+                                <td class="text-center"  >{{project.project_name}} 
+                                     
+                                 </td>
+                                 <td><i >{{project.project_description}}<i/></td>
+                                <td class="text-center">
+                                    <a href="#" ng-click="setSelectedProject(project.id,'dashboard')" title="Dashboard"   class="btn   btn-lg">
+                                        <i class="fa fa-fw fa-dashboard"></i>
                                     </a>
-                                    <a href="#" ng-click="setSelectedProject(project.id,'ontologies')" class="btn  btn-md">
-                                        <i class="fa fa-fw fa-copy"></i>Ontologies
+                                </td>
+                                <td class="text-center">
+                                    <a href="#" ng-click="setSelectedProject(project.id,'search')"   class="btn   btn-lg" title="Search" >
+                                        <i class="fa fa-fw fa-search"></i>
                                     </a>
-                                    <a href="#"   ng-click="setSelectedProject(project.id,'data')" class="btn  btn-md">
-                                        <i class="fa fa-fw fa-book"></i>Data
+                                </td>
+                                <td class="text-center">
+                                    <a href="#" ng-click="setSelectedProject(project.id,'domains')"   class="btn   btn-lg" title="Domains" >
+                                        <i class="fa fa-fw fa-clipboard"></i>
                                     </a>
-                                    <a href="#" ng-click="setSelectedProject(project.id,'tools')" class="btn  btn-md">
-                                        <i class="fa fa-fw fa-code-fork"></i>Tools
+                                </td>
+                                <td class="text-center">
+                                    <a href="#" ng-click="setSelectedProject(project.id,'ontologies')" class="btn  btn-lg" title="Ontologies" >
+                                        <i class="fa fa-fw fa-copy"></i>
                                     </a>
-                                    <a href="#" ng-click="setSelectedProject(project.id,'reports')" class="btn   btn-md">
-                                        <i class="fa fa-fw fa-bar-chart"></i>Reports
+                                </td>
+                                <td class="text-center">
+                                    <a href="#"   ng-click="setSelectedProject(project.id,'data')" class="btn  btn-lg" title="Data" >
+                                        <i class="fa fa-fw fa-book"></i>
                                     </a>
-                                    <a href="#" class="btn  btn-md"  ng-click="editProject(project.id)">
+                                </td>
+                                <td class="text-center">
+                                    <a href="#" ng-click="setSelectedProject(project.id,'tools')" class="btn  btn-lg" title="Tools" >
+                                        <i class="fa fa-fw fa-code-fork"></i>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="#" ng-click="setSelectedProject(project.id,'reports')" class="btn   btn-lg" title="Reports" >
+                                        <i class="fa fa-fw fa-bar-chart"></i>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="#" class="btn  btn-md"  ng-click="editProject(project.id)" title="Edit" >
                                         <i class="fa fa-fw fa-edit"></i>Edit
                                     </a>
                                 </td>
@@ -53,12 +75,22 @@
                         <thead>
                             <tr>
                                 <th class="btn-xs">#</th>
-                                <th class="btn-xs" ng-click="sort('project_name')" >Project Name
+                                <th class="btn-xs text-center" ng-click="sort('project_name')" >Project Name
                                      
                                     <i class="fa fa-fw -circle-o fa-angle-down"    ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></i> 
                                 </th>
-                                <th class="btn-xs" >Description</th>
-                                <th class="btn-xs">Actions</th>
+                                <th class="btn-xs text-center">Project Description
+                                     
+                                     
+                                </th>
+                                <th class="btn-xs text-center">Dashboard</th>
+                                <th class="btn-xs text-center">Search</th>
+                                <th class="btn-xs text-center">Domains</th>
+                                <th class="btn-xs text-center">Ontologies</th>
+                                <th class="btn-xs text-center">Data</th>
+                                <th class="btn-xs text-center">Tools</th>
+                                <th class="btn-xs text-center">Reports</th>
+                                <th class="btn-xs text-center">Actions</th>
                             </tr>
                         </thead>
                     </table>

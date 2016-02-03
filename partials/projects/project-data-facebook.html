@@ -7,35 +7,36 @@
               <div class="panel-body">
                 <div class="col-md-7">
                   <form role="form" name="datafbForm" ng-submit="updateFb()"   novalidate>
-                    <div class="form-group" ng-class="{ 'has-error' : datafbForm.url_collection_name.$invalid && !datafbForm.url_collection_name.$pristine }">
+                    <div class="form-group required" ng-class="{ 'has-error' : datafbForm.url_collection_name.$invalid && !datafbForm.url_collection_name.$pristine }">
                       <label class="control-label" for="exampleInputEmail1">Collection Name</label>
                       <input class="form-control" id="exampleInputEmail1"
                       placeholder="Enter collection name" type="text">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                       <label class="control-label" for="exampleInputEmail1">Facebook Like Page Id</label>
                       <input class="form-control" id="exampleInputEmail1"
                       placeholder="Enter FB Like Page Id" type="text">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                       <label class="control-label" for="exampleInputEmail1">Facebook Access Token</label>
                       <input class="form-control" id="exampleInputEmail1"
                       placeholder="Enter FB access token" type="text">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                       <label class="control-label col-md-5" for="exampleInputEmail1">Feed Limit</label>
                       <div class="form-group col-md-2">
                        <input type="number" min="1" max="100" class="form-control input-sm" ng-value="50"  /> 
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                      <div class="col-sm-6 col-sm-offset-4 text-left">
-                        <button type="submit" class="btn btn-primary">
-                          <i class="fa fa-fw -circle-o fa-save"></i>Save</button>
-                        <button type="submit" class="btn btn-primary">Cancel</button>
+                        <div class="text-right">
+                          <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-fw -circle-o fa-save"></i>Save</button>
+                          <button type="submit" class="btn btn-primary">Cancel</button>
+                        </div>
                       </div>
                     </div>
+                    
+                    
+                       
                   </form>
                 </div>
               </div>

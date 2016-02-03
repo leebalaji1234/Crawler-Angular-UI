@@ -5,14 +5,22 @@ angular.module('tab-directives', [])
     templateUrl: "partials/tab.html",
     controller:function($scope,$location){
       $scope.project_sel_id  = false;
-      $scope.projectselected = ""; 
+      $scope.project_id = ""; 
       $scope.projecttab = 'project';
       $scope.datatab = 'web'; 
+      $scope.channel_id = "";
+
+      $scope.selectChannel  = function(channelId){
+          $scope.channel_id = channelId; 
+      };
+
       if($location.path() != ''){
         $scope.tab = $location.path();
       }else{
         $scope.tab = "/dashboard";
       }
+
+
       $scope.checkProjectTab = function(tabName){
         return $scope.projecttab === tabName;
       }
@@ -34,7 +42,7 @@ angular.module('tab-directives', [])
       };
       $scope.setSelectedProject = function(selectedId,tabName){
         $scope.project_sel_id = true;
-        $scope.projectselected  = selectedId;
+        $scope.project_id  = selectedId;
         $scope.setprojectTab(tabName);
       };
 

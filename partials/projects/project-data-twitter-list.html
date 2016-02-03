@@ -15,27 +15,21 @@
               </div>
             </div>
             <table class="table table-bordered table-condensed table-hover table-striped">
-              <tbody>
+              <tbody dir-paginate="socialTwitter in datasocials| orderBy:sortKey:reverse|filter:search|itemsPerPage:pageSize" current-page="currentPage">
                 <tr>
-                  <td>1</td>
-                  <td>Mark</td>
+                  <td>{{ ($index + 1) + (currentPage - 1) * pageSize}}</td>
+                  <td>{{socialTwitter.collection_name}}</td>
                   <td>
                     <span class="label label-success">Valid</span>
                   </td>
-                  <td></td>
+                  <td>{{socialTwitter.created_at}}</td>
                   <td>
                     <a href="#" class="btn  btn-md"><i class="fa fa-fw fa-eye"></i>&nbsp;View</a>
                     <a href="#" class="btn  btn-md"><i class="fa fa-fw fa-edit"></i> Edit</a>
                     <a href="#" class="btn  btn-md"><i class="fa fa-fw fa-trash"></i> Delete</a>
                   </td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Jacob</td>
-                  <td contenteditable="true"></td>
-                  <td></td>
-                  <td></td>
-                </tr>
+                 
               </tbody>
               <thead>
                 <tr>
