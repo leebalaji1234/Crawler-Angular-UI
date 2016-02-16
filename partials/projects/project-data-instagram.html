@@ -1,55 +1,87 @@
-<div class="col-md-10">
-            <div class="panel panel-primary">
-              <div class="panel-heading">
-                <h3 class="panel-title">
-                  <i class="fa fa-fw fa-instagram"></i>Instagram</h3>
-              </div>
-              <div class="panel-body">
-                <form role="form">
-                  <div class="col-md-5">
-                    <div class="form-group required">
-                      <label class="control-label" for="exampleInputEmail1">Collection Name</label>
-                      <input class="form-control" id="exampleInputEmail1" placeholder="Enter collection name" type="text">
-                    </div>
-                    <div class="form-group required">
-                      <label class="control-label" for="exampleInputEmail1">Instagram Access Token</label>
-                      <input class="form-control" id="exampleInputEmail1" placeholder="Enter instagram access token" type="text">
-                    </div>
-                    <hr>
-                    <div class="form-group col-sm-5 required">
-                      <label class="control-label" for="exampleInputEmail1">Start time</label>
-                      <input class="form-control"   placeholder="Enter start time" type="text" />
-                       
-                    </div>
-                    <div class="form-group col-sm-5 required">
-                      <label class="control-label" for="exampleInputEmail1">End time</label>
-                      <input class="form-control" id="datetimepicker2" placeholder="Enter end time" type="text">
-                    </div>
-                  </div>
-                  <div class="col-md-5">
-                     
-                    <div class="form-group">
-                      <label class="control-label" for="exampleInputEmail1">Latitude</label>
-                      <input class="form-control" id="exampleInputEmail1" type="text">
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label" for="exampleInputEmail1">Longitude</label>
-                      <input class="form-control" id="exampleInputEmail1" type="text">
-                    </div>
-                    <hr>
-                    <div class="form-group">
-                      <label class="control-label" for="exampleInputEmail1">Tags&nbsp;</label>
-                      <textarea class="form-control" id="exampleInputEmail1"></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-3 col-sm-offset-6 text-right">
-                      <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-fw -circle-o fa-save"></i>Save</button>
-                      <button type="submit" class="btn btn-primary">Cancel</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
+<div class="col-md-10"  >
+   <div class="panel panel-primary">
+      <div class="panel-heading">
+         <h3 class="panel-title">
+            <i class="fa fa-fw fa-instagram"></i>Instagram
+         </h3>
+      </div>
+      <div class="panel-body">
+         <form role="form"  name="datainstagramForm" ng-submit="updateISocial()"   novalidate>
+            <div class="col-md-5">
+               <div class="form-group required" ng-class="{ 'has-error' : datainstagramForm.collection_name.$invalid && !datainstagramForm.collection_name.$pristine }">
+                  <label class="control-label" for="exampleInputEmail1">Collection Name</label>
+                  <input class="form-control" id="exampleInputEmail1" placeholder="Enter collection name" type="text" name="collection_name"  ng-model="datasocial.collection_name" ng-change="verifyIDuplicate()" ng-minlength="1" ng-maxlength="40" required />
+                  <p ng-show="datainstagramForm.collection_name.$error.required && datainstagramForm.collection_name.$invalid && !datainstagramForm.collection_name.$pristine " class="help-block" >
+                     Collection name is required !
+                  </p>
+                  <p ng-show="datainstagramForm.collection_name.$error.maxlength && datainstagramForm.collection_name.$invalid && !datainstagramForm.collection_name.$pristine" class="help-block" >
+                     Maximum length allowed is 40 !
+                  </p>
+                  <p ng-show="datainstagramForm.collection_name.$error.duplicate && datainstagramForm.collection_name.$invalid && !datainstagramForm.collection_name.$pristine"  class="help-block" >
+                     Duplicates not allowed !
+                  </p>
+               </div>
+               <div class="form-group required" ng-class="{ 'has-error' : datainstagramForm.access_token.$invalid && !datainstagramForm.access_token.$pristine }">
+                  <label class="control-label" for="exampleInputEmail1" >Instagram Access Token</label>
+                  <input class="form-control" id="exampleInputEmail1" placeholder="Enter instagram access token" type="text" name="access_token" ng-model="datasocial.access_token"      ng-minlength="1" ng-maxlength="390" required />
+                  <p ng-show="datainstagramForm.access_token.$error.required && datainstagramForm.access_token.$invalid && !datainstagramForm.access_token.$pristine " class="help-block" >
+                     Access token is required !
+                  </p>
+                  <p ng-show="datainstagramForm.access_token.$error.maxlength && datainstagramForm.access_token.$invalid && !datainstagramForm.access_token.$pristine" class="help-block" >
+                     Maximum length allowed is 390 !
+                  </p>
+                  <p ng-show="datainstagramForm.access_token.$error.duplicate && datainstagramForm.access_token.$invalid && !datainstagramForm.access_token.$pristine"  class="help-block" >
+                     Duplicates not allowed !
+                  </p>
+               </div>
+               <hr>
+               <div class="form-group col-sm-5 required" ng-class="{ 'has-error' : datainstagramForm.instagram_start_time.$invalid && !datainstagramForm.instagram_start_time.$pristine }">
+                  <label class="control-label" for="exampleInputEmail1">Start time</label>
+                  <input class="form-control"   placeholder="Enter start time" type="text" name="instagram_start_time" ng-model="datasocial.instagram_start_time"  ng-minlength="1" ng-maxlength="11" required/>
+                  <p ng-show="datainstagramForm.instagram_start_time.$error.required && datainstagramForm.instagram_start_time.$invalid && !datainstagramForm.instagram_start_time.$pristine " class="help-block" >
+                     Start time is required !
+                  </p>
+               </div>
+               <div class="form-group col-sm-5 required" ng-class="{ 'has-error' : datainstagramForm.instagram_end_time.$invalid && !datainstagramForm.instagram_end_time.$pristine }">
+                  <label class="control-label" for="exampleInputEmail1">End time</label>
+                  <input class="form-control" id="datetimepicker2" placeholder="Enter end time" type="text" name="instagram_end_time" ng-model="datasocial.instagram_end_time" ng-minlength="1" ng-maxlength="11" required />
+                  <p ng-show="datainstagramForm.instagram_end_time.$error.required && datainstagramForm.instagram_end_time.$invalid && !datainstagramForm.instagram_end_time.$pristine " class="help-block" >
+                     End time is required !
+                  </p>
+               </div>
             </div>
-          </div>
+            <div class="col-md-5">
+               <div class="form-group" ng-class="{ 'has-error' : datainstagramForm.geo_lat.$invalid && !datainstagramForm.geo_lat.$pristine }">
+                  <label class="control-label" for="exampleInputEmail1">Latitude</label>
+                  <input class="form-control" id="exampleInputEmail1" type="text" name="geo_lat" ng-model="datasocial.geo_lat" ng-minlength="1" ng-maxlength="35" />
+                  <p ng-show="datainstagramForm.geo_lat.$error.maxlength && datainstagramForm.geo_lat.$invalid && !datainstagramForm.geo_lat.$pristine" class="help-block" >
+                     Maximum length allowed is 35 !
+                  </p>
+               </div>
+               <div class="form-group"  ng-class="{ 'has-error' : datainstagramForm.geo_lon.$invalid && !datainstagramForm.geo_lon.$pristine }">
+                  <label class="control-label" for="exampleInputEmail1">Longitude</label>
+                  <input class="form-control" id="exampleInputEmail1" type="text" name="geo_lon" ng-model="datasocial.geo_lon" ng-minlength="1" ng-maxlength="35"/>
+                  <p ng-show="datainstagramForm.geo_lon.$error.maxlength && datainstagramForm.geo_lon.$invalid && !datainstagramForm.geo_lon.$pristine" class="help-block" >
+                     Maximum length allowed is 35 !
+                  </p>
+               </div>
+               <hr>
+               <div class="form-group" ng-class="{ 'has-error' : datainstagramForm.instagram_tags.$invalid && !datainstagramForm.instagram_tags.$pristine }">
+                  <label class="control-label" for="exampleInputEmail1">Tags&nbsp;</label>
+                  <textarea class="form-control" id="exampleInputEmail1" ng-model="datasocial.instagram_tags" ng-minlength="1" ng-maxlength="1990"></textarea>
+                  <p ng-show="datainstagramForm.instagram_tags.$error.maxlength && datainstagramForm.instagram_tags.$invalid && !datainstagramForm.instagram_tags.$pristine" class="help-block" >
+                     Maximum length allowed is 1990 !
+                  </p>
+               </div>
+            </div>
+            <div class="form-group">
+               <div class="col-sm-3 col-sm-offset-6 text-right">
+                  <button type="submit" class="btn btn-primary" ng-disabled="datainstagramForm.$invalid">
+                  <i class="fa fa-fw -circle-o fa-save"></i>Save</button>
+                  <button type="reset" class="btn btn-primary" ng-click="resetISocial()">Cancel</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>

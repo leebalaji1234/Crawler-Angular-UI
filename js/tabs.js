@@ -9,7 +9,7 @@ angular.module('tab-directives', [])
       $scope.projecttab = 'project';
       $scope.datatab = 'web'; 
       $scope.channel_id = "";
-
+      $scope.isDisplayed = false;
       $scope.selectChannel  = function(channelId){
           $scope.channel_id = channelId; 
       };
@@ -44,8 +44,12 @@ angular.module('tab-directives', [])
         $scope.project_sel_id = true;
         $scope.project_id  = selectedId;
         $scope.setprojectTab(tabName);
+        $scope.isDisplayed = true;
+       
+        // $scope.listWebs();
+         // $scope.$eval(listWebs()); 
       };
-
+      
 
     }
   };

@@ -132,11 +132,14 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
         };
 
         $scope.updateWeb = function () {
-           
+            
           if($scope.datawebForm.$valid){
+
+            $scope.dataweb.project_id = $scope.project_id;
+             // console.log($scope.dataweb);
             if($scope.dataweb.id == "" || $scope.dataweb.id == undefined){
               DataWebsFactory.create($scope.dataweb,function(response){ 
-                 $scope.datawebs = DataWebsFactory.query();
+                 $scope.datawebs = $scope.listWebs();
                  $scope.dataweb={};
                  $scope.resetweb();
               });
@@ -144,7 +147,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
               DataWebFactory.update($scope.dataweb,function(response){ 
                  $scope.dataweb={};
                  $scope.resetweb();
-                 $scope.datawebs = DataWebsFactory.query();
+                 $scope.datawebs = $scope.listWebs();
               });
 
             }
@@ -169,33 +172,67 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
   };
 }).directive("projectdataweblist", function() {
   return {
-    restrict: 'E',
+    restrict: 'E', 
     templateUrl: "partials/projects/project-data-web-list.html",
     controller:function($scope,DataWebsFactory,DataWebFactory){
-      
+      $scope.waction = "";
       $scope.datawebs = [];
       $scope.webcurrentPage = 1;
-      $scope.webpageSize = 2; 
-      $scope.datawebs = DataWebsFactory.query(); 
+      $scope.webpageSize = 2;  
+      $scope.$watch('isDisplayed', function() {
+        $scope.listWebs();
+       });
        $scope.sortweb = function(keyname){
         $scope.websortKey = keyname;   
         $scope.webreverse = !$scope.webreverse;  
        }; 
+
+       $scope.listWebs = function(){
+
+         if(($scope.project_id != '' && $scope.project_id != undefined)){
+          console.log("on load display ::"+ $scope.project_id);
+            $scope.datawebs = DataWebsFactory.query({project_id: $scope.project_id});
+
+         }
+       }
+      
+      
+       $scope.viewWeb = function (dataWebId) { 
+             
+            $scope.dataweb = DataWebFactory.show({id: dataWebId}); 
+            $scope.waction = "view";
+       };
         
+       $scope.getSchedulerName = function(schid){
+           var temp;
+        angular.forEach($scope.schedulers, function(value, key) {
+         if(value.id == schid){
+            temp = value.scheduler_name;
+          return false;
+        }
+       });
+        return temp;
+
+       }
        $scope.editDataWeb = function (dataWebId) {
              
             $scope.dataweb = DataWebFactory.show({id: dataWebId});
             $scope.datawebForm.url_collection_name.$setValidity('duplicate',true);
+            $scope.waction = "edit";
        };
        $scope.deleteDataWeb = function (dataWebId) {
             if(confirm('Are you sure want to delete?')){
-              DataWebFactory.delete({id: dataWebId});
-              $scope.datawebs = DataWebsFactory.query();
+              DataWebFactory.delete({id: dataWebId},function(response){  
+                 $scope.datawebs = $scope.listWebs();
+              });
+              
             }  
         };
+
        $scope.newDataWeb = function () {
             
             $scope.dataweb = {};
+            $scope.waction = "";
        };
        $scope.$watch('datawebForm', function(datawebForm) {
           if(datawebForm) {  
@@ -206,107 +243,304 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
               console.log('datawebForm in out of Scope');
           }        
       });
+
     }
   };
 }).directive("projectdatafbform", function() {
   return {
     restrict: 'E',
     templateUrl: "partials/projects/project-data-facebook.html",
-    controller:function($scope,DataSocialsFactory){ 
-     $scope.datasocial= {}; 
-     
-       $scope.resetSocial = function(formName) {
-            if($scope.formName) {  
-              $scope.formName.$setPristine();
+    controller:function($scope,DataSocialsFactory,DataSocialsListFactory,DataSocialFactory){
+      $scope.datasocial= {};  
+       $scope.resetfb = function() {
+           
+            if($scope.datafbForm) {  
+              $scope.datafbForm.$setPristine();
               // $scope.projectForm.$setUntouched();
             } 
         };
 
-        // $scope.updateSocial = function (formName) {
-           
-        //   if($scope.formName.$valid){
-        //     if($scope.datasocial.id == "" || $scope.datasocial.id == undefined){
-        //       DataSocialsFactory.create($scope.datasocial,function(response){ 
-        //          $scope.datasocials = DataSocialsFactory.query({project_id:$scope.project_id,channel_id:$scope.channel_id});
-        //          $scope.datasocial={};
-        //          $scope.resetSocial(formName);
-        //       });
-        //     }else{
-        //       // DataSocialFactory.update($scope.datasocial,function(response){ 
-        //       //    $scope.datasocial={};
-        //       //    $scope.resetSocial(formName);
-        //       //    $scope.datasocials = DataSocialsFactory.query({project_id:$scope.project_id,channel_id:$scope.channel_id});
-        //       // });
+      
 
-        //     }
-        //   }
-        //     // $location.path('/user-list');
-        // }
-      //   $scope.verifyfbDuplicate = function() {
-      //      var sorted,isDuplicate, i; 
-      //       sorted = $scope.datafbs;  
-      //       for(i = 0; i < sorted.length; i++) {  
+
+        $scope.updatefbSocial = function () {
+            
+          if($scope.datafbForm.$valid){
+            if($scope.datasocial.id == "" || $scope.datasocial.id == undefined){
+
+              $scope.datasocial.project_id = $scope.project_id;
+              $scope.datasocial.channel_id = $scope.channel_id;
+
+              DataSocialsListFactory.create($scope.datasocial,function(response){ 
+                 $scope.datasocials = $scope.listSocials();
+                 $scope.datasocial={};
+                 $scope.resetfb();
+              });
+            }else{
+              DataSocialFactory.update($scope.datasocial,function(response){ 
+                    $scope.datasocial={};
+                    $scope.resetfb();
+                    $scope.datasocials = $scope.listSocials();
+                });
+
+            }
+          }
+            // $location.path('/user-list');
+        }
+        $scope.verifyfbDuplicate = function() {
+           var sorted,isDuplicate, i; 
+            sorted = DataSocialsListFactory.query();  
+            for(i = 0; i < sorted.length; i++) {  
               
-      //         if(($scope.datafb.id == "" || $scope.datafb.id != undefined) && ($scope.datafb.id != sorted[i].id)){ 
-      //           isDuplicate = ((sorted[i] && sorted[i].url_collection_name == $scope.dataweb.url_collection_name));
-      //         }else{
-      //           isDuplicate = ((sorted[i] && sorted[i].url_collection_name == $scope.dataweb.url_collection_name));
-      //         }
-      //        $scope.datawebForm.url_collection_name.$setValidity('duplicate',!isDuplicate);
-      //        if (isDuplicate == true){return false;}
-      //      }
-      //   }
-    }
+              if(($scope.datasocial.id == "" || $scope.datasocial.id != undefined) && ($scope.datasocial.id != sorted[i].id)){ 
+                isDuplicate = ((sorted[i] && sorted[i].url_collection_name == $scope.datasocial.url_collection_name));
+              }else{
+                isDuplicate = ((sorted[i] && sorted[i].url_collection_name == $scope.datasocial.url_collection_name));
+              }
+             $scope.datasocial.collection_name.$setValidity('duplicate',!isDuplicate);
+             if (isDuplicate == true){return false;}
+           }
+        }
+
+    }  
   };
 }).directive("projectdatafblist", function() {
   return {
     restrict: 'E',
-    templateUrl: "partials/projects/project-data-facebook-list.html",
-    controller:function($scope,DataSocialsFactory){
-      $scope.datasocials = []; 
 
+    templateUrl: "partials/projects/project-data-facebook-list.html",
+    controller:function($scope,DataSocialsFactory,DataSocialFactory){
+      $scope.datasocials = []; 
+      $scope.fbaction = '';
+      $scope.statusVal = 'In Progress--12';
       $scope.listSocials = function(){
         if(($scope.project_id != "" || $scope.project_id != undefined) && ($scope.channel_id != "" || $scope.channel_id != undefined) ){
           dataParams = {project_id:$scope.project_id, channel_id:$scope.channel_id}; 
           $scope.datasocials = DataSocialsFactory.query(dataParams); 
         }
       };
+      $scope.getProcessStatus = function(code){
+           var codeVal;
+           if(code == "200"){ codeVal = "In Progress";}
+            else if(code == "300"){ codeVal = "Completed";}
+              else if(code == "400"){ codeVal = "Failed";}
+                else{ codeVal = "Started";}
+                return codeVal;
+      }
 
+      $scope.newfb = function () {
+            
+            $scope.datasocial = {};
+            $scope.fbaction = "";
+       };
+     
       
-      
+       $scope.editfb = function (dataSocialId) { 
+             
+            $scope.datasocial = DataSocialFactory.show({id: dataSocialId});  
+            $scope.datafbForm.collection_name.$setValidity('duplicate',true);
+            $scope.fbaction = "edit";
+       };
+       $scope.viewfb = function (dataSocialId) { 
+             
+            $scope.datasocial = DataSocialFactory.show({id: dataSocialId}); 
+            $scope.fbaction = "view";
+       };
+       $scope.deletefb = function (dataSocialId) { 
+             
+            if(confirm('Are you sure want to delete?')){
+              DataSocialFactory.delete({id: dataSocialId});
+              $scope.datasocials = $scope.listSocials();
+            } 
+       };
+
+       
+       $scope.$watch('datafbForm', function(datafbForm) {
+          if(datafbForm) {  
+              console.log('datafbForm in Scope');
+          }
+          else { 
+
+              console.log('datafbForm in out of Scope');
+          }        
+      });
       
     }
   };
 }).directive("projectdatatwitterform", function() {
   return {
     restrict: 'E',
-    templateUrl: "partials/projects/project-data-twitter.html",
-    controller:function(){
+    templateUrl: "partials/projects/project-data-twitter.html", 
+    controller:function($scope,DataSocialsFactory,DataSocialsListFactory,DataSocialFactory){
+      $scope.datasocial= {};  
+       $scope.resetTSocial = function() {
+          
+            if($scope.datatwitterForm) {  
+               
+              $scope.datatwitterForm.$setPristine();
+              // $scope.projectForm.$setUntouched();
+            } 
+        };
+
       
-    }
+
+
+        $scope.updateTSocial = function () {
+            
+          if($scope.datatwitterForm.$valid){
+            if($scope.datasocial.id == "" || $scope.datasocial.id == undefined){
+
+              $scope.datasocial.project_id = $scope.project_id;
+              $scope.datasocial.channel_id = $scope.channel_id;
+
+              DataSocialsListFactory.create($scope.datasocial,function(response){ 
+                 $scope.datasocials = $scope.listSocials();
+                 $scope.datasocial={};
+                 $scope.resetTSocial();
+              });
+            }else{
+              DataSocialFactory.update($scope.datasocial,function(response){ 
+                    $scope.datasocial={};
+                    $scope.resetTSocial();
+                    $scope.datasocials = $scope.listSocials();
+                });
+
+            }
+          }
+            // $location.path('/user-list');
+        }
+        $scope.verifyTDuplicate = function() {
+           var sorted,isDuplicate, i; 
+            sorted = DataSocialsListFactory.query();  
+            for(i = 0; i < sorted.length; i++) {  
+              
+              if(($scope.datasocial.id == "" || $scope.datasocial.id != undefined) && ($scope.datasocial.id != sorted[i].id)){ 
+                isDuplicate = ((sorted[i] && sorted[i].url_collection_name == $scope.datasocial.url_collection_name));
+              }else{
+                isDuplicate = ((sorted[i] && sorted[i].url_collection_name == $scope.datasocial.url_collection_name));
+              }
+             $scope.datasocial.collection_name.$setValidity('duplicate',!isDuplicate);
+             if (isDuplicate == true){return false;}
+           }
+        }
+
+    }  
   };
 }).directive("projectdatatwitterlist", function() {
   return {
     restrict: 'E',
     templateUrl: "partials/projects/project-data-twitter-list.html",
-    controller:function(){
+    controller:function($scope,DataSocialFactory){
+       $scope.newT = function () {
+            
+            $scope.datasocial = {};
+       };
+     
       
+       $scope.editT = function (dataSocialId) { 
+             
+            $scope.datasocial = DataSocialFactory.show({id: dataSocialId}); 
+            $scope.datafbForm.collection_name.$setValidity('duplicate',true);
+       };
+
+       
+       $scope.$watch('datatwitterForm', function(datafbForm) {
+          if(datafbForm) {  
+              console.log('datatwitterForm in Scope');
+          }
+          else { 
+
+              console.log('datatwitterForm in out of Scope');
+          }        
+      });
     }
   };
 }).directive("projectdatainstagramform", function() {
   return {
     restrict: 'E',
     templateUrl: "partials/projects/project-data-instagram.html",
-    controller:function(){
+    controller:function($scope,DataSocialsFactory,DataSocialsListFactory,DataSocialFactory){
+      $scope.datasocial= {};  
+       $scope.resetISocial = function() {
+          
+            if($scope.datainstagramForm) {  
+               
+              $scope.datainstagramForm.$setPristine();
+              // $scope.projectForm.$setUntouched();
+            } 
+        };
+
       
+
+
+        $scope.updateISocial = function () {
+            
+          if($scope.datainstagramForm.$valid){
+            if($scope.datasocial.id == "" || $scope.datasocial.id == undefined){
+
+              $scope.datasocial.project_id = $scope.project_id;
+              $scope.datasocial.channel_id = $scope.channel_id;
+
+              DataSocialsListFactory.create($scope.datasocial,function(response){ 
+                 $scope.datasocials = $scope.listSocials();
+                 $scope.datasocial={};
+                 $scope.resetISocial();
+              });
+            }else{
+              DataSocialFactory.update($scope.datasocial,function(response){ 
+                    $scope.datasocial={};
+                    $scope.resetISocial();
+                    $scope.datasocials = $scope.listSocials();
+                });
+
+            }
+          }
+            // $location.path('/user-list');
+        }
+        $scope.verifyIDuplicate = function() {
+           var sorted,isDuplicate, i; 
+            sorted = DataSocialsListFactory.query();  
+            for(i = 0; i < sorted.length; i++) {  
+              
+              if(($scope.datasocial.id == "" || $scope.datasocial.id != undefined) && ($scope.datasocial.id != sorted[i].id)){ 
+                isDuplicate = ((sorted[i] && sorted[i].url_collection_name == $scope.datasocial.url_collection_name));
+              }else{
+                isDuplicate = ((sorted[i] && sorted[i].url_collection_name == $scope.datasocial.url_collection_name));
+              }
+             $scope.datasocial.collection_name.$setValidity('duplicate',!isDuplicate);
+             if (isDuplicate == true){return false;}
+           }
+        }
+
     }
   };
 }).directive("projectdatainstagramlist", function() {
   return {
     restrict: 'E',
     templateUrl: "partials/projects/project-data-instagram-list.html",
-    controller:function(){
+    controller:function($scope,DataSocialFactory){
+       $scope.newI = function () {
+            
+            $scope.datasocial = {};
+       };
+     
       
+       $scope.editI = function (dataSocialId) { 
+             
+            $scope.datasocial = DataSocialFactory.show({id: dataSocialId}); 
+            $scope.datainstagramForm.collection_name.$setValidity('duplicate',true);
+       };
+
+       
+       $scope.$watch('datainstagramForm', function(datainstagramForm) {
+          if(datainstagramForm) {  
+              console.log('datainstagramForm in Scope');
+          }
+          else { 
+
+              console.log('datainstagramForm in out of Scope');
+          }        
+      });
     }
   };
 }).factory('ChannelsFactory', function ($resource) { 
@@ -326,14 +560,25 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
         delete: { method: 'DELETE', params: {id: '@id'} }
     })
 }).factory('DataWebsFactory', function ($resource) { 
-    return $resource($appconfig.host + '/source_webs.json', {}, {
-        query: { method: 'GET', isArray: true },
+    return $resource($appconfig.host + '/projects/:project_id/source_webs.json', {}, {
+        query: { method: 'GET', params:{project_id: '@project_id'},isArray: true },
         create: { method: 'POST' }
     })
 }).factory('DataSocialsFactory', function ($resource) { 
     return $resource($appconfig.host + '/projects/:project_id/channels/:channel_id/source_socials.json', {}, {
         query: { method: 'GET', params:{project_id: '@project_id',channel_id: '@channel_id'},isArray: true },
         create: { method: 'POST' }
+    })
+}).factory('DataSocialsListFactory', function ($resource) { 
+    return $resource($appconfig.host + '/source_socials.json', {}, {
+        query: { method: 'GET', isArray: true },
+        create: { method: 'POST' }
+    })
+}).factory('DataSocialFactory', function ($resource) { 
+    return $resource($appconfig.host + '/source_socials/:id.json', {}, {
+        show: { method: 'GET' },
+        update: { method: 'PUT', params: {id: '@id'} },
+        delete: { method: 'DELETE', params: {id: '@id'} }
     })
 });
 

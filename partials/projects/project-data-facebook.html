@@ -1,41 +1,102 @@
-<div class="col-md-10">
+<div class="col-md-10"  >
             <div class="panel panel-primary">
               <div class="panel-heading">
                 <h3 class="panel-title">
                   <i class="fa fa-fw fa-facebook"></i>Facebook</h3>
+
               </div>
               <div class="panel-body">
-                <div class="col-md-7">
-                  <form role="form" name="datafbForm" ng-submit="updateFb()"   novalidate>
-                    <div class="form-group required" ng-class="{ 'has-error' : datafbForm.url_collection_name.$invalid && !datafbForm.url_collection_name.$pristine }">
-                      <label class="control-label" for="exampleInputEmail1">Collection Name</label>
-                      <input class="form-control" id="exampleInputEmail1"
-                      placeholder="Enter collection name" type="text">
+                <div class="col-md-7" ng-show="fbaction != 'view'">
+                  <form role="form" name="datafbForm" ng-submit="updatefbSocial()"   novalidate>
+                    <div class="form-group required" ng-class="{ 'has-error' : datafbForm.collection_name.$invalid && !datafbForm.collection_name.$pristine }">
+
+                      <label class="control-label" for="exampleInputEmail1">Collection Name
+                      </label>
+
+                      <input class="form-control" id="exampleInputEmail1" name="collection_name" ng-model="datasocial.collection_name" ng-minlength="1" ng-maxlength="40" ng-change="verifyfbDuplicate()" placeholder="Enter collection name" type="text" required />
+                      <p ng-show="datafbForm.collection_name.$error.required && datafbForm.collection_name.$invalid && !datafbForm.collection_name.$pristine " class="help-block" >
+                        Collection name is required !
+                        </p>
+                        <p ng-show="datafbForm.collection_name.$error.maxlength && datafbForm.collection_name.$invalid && !datafbForm.collection_name.$pristine" class="help-block" >
+                            Maximum length allowed is 40 !
+                        </p>
+                        <p ng-show="datafbForm.collection_name.$error.duplicate && datafbForm.collection_name.$invalid && !datafbForm.collection_name.$pristine"  class="help-block" >
+                            Duplicates not allowed !
+                        </p>
                     </div>
-                    <div class="form-group required">
+                    <div class="form-group required" ng-class="{ 'has-error' : datafbForm.fb_like_page_id.$invalid && !datafbForm.fb_like_page_id.$pristine }">
                       <label class="control-label" for="exampleInputEmail1">Facebook Like Page Id</label>
                       <input class="form-control" id="exampleInputEmail1"
-                      placeholder="Enter FB Like Page Id" type="text">
+                      placeholder="Enter FB Like Page Id" name="fb_like_page_id" ng-model="datasocial.fb_like_page_id" ng-minlength="1" ng-maxlength="390" type="text" 
+                       required />
+
+                      <p ng-show="datafbForm.fb_like_page_id.$error.required && datafbForm.fb_like_page_id.$invalid && !datafbForm.fb_like_page_id.$pristine " class="help-block" >
+                        Like page id required !
+                        </p>
+                        <p ng-show="datafbForm.fb_like_page_id.$error.maxlength && datafbForm.fb_like_page_id.$invalid && !datafbForm.fb_like_page_id.$pristine" class="help-block" >
+                            Maximum length allowed is 390 !
+                        </p>
+
                     </div>
-                    <div class="form-group required">
+                    <div class="form-group required" ng-class="{ 'has-error' : datafbForm.access_token.$invalid && !datafbForm.access_token.$pristine }">
                       <label class="control-label" for="exampleInputEmail1">Facebook Access Token</label>
-                      <input class="form-control" id="exampleInputEmail1"
-                      placeholder="Enter FB access token" type="text">
+                      <input class="form-control" id="exampleInputEmail1" ng-model="datasocial.access_token"  name="access_token"
+                      placeholder="Enter FB access token" ng-minlength="1" ng-maxlength="390" type="text" required/>
+
+                      <p ng-show="datafbForm.access_token.$error.required && datafbForm.access_token.$invalid && !datafbForm.access_token.$pristine " class="help-block" >
+                        Access token required !
+                        </p>
+                        <p ng-show="datafbForm.access_token.$error.maxlength && datafbForm.access_token.$invalid && !datafbForm.access_token.$pristine" class="help-block" >
+                            Maximum length allowed is 390 !
+                        </p>
+
+
                     </div>
-                    <div class="form-group required">
+                    <div class="form-group required" ng-class="{ 'has-error' : datafbForm.fb_feed_limit.$invalid && !datafbForm.fb_feed_limit.$pristine }">
                       <label class="control-label col-md-5" for="exampleInputEmail1">Feed Limit</label>
                       <div class="form-group col-md-2">
-                       <input type="number" min="1" max="100" class="form-control input-sm" ng-value="50"  /> 
+                       <input type="number" min="1" max="100" class="form-control input-sm" ng-model="datasocial.fb_feed_limit" name="fb_feed_limit" ng-value="50"  required /> 
+                        <p ng-show="datafbForm.fb_feed_limit.$error.required && datafbForm.fb_feed_limit.$invalid && !datafbForm.fb_feed_limit.$pristine " class="help-block" >
+                        Feed limit required !
+                        </p>
                         </div>
                         <div class="text-right">
-                          <button type="submit" class="btn btn-primary">
+                          <button type="submit" class="btn btn-primary" ng-disabled="datafbForm.$invalid">
                             <i class="fa fa-fw -circle-o fa-save"></i>Save</button>
-                          <button type="submit" class="btn btn-primary">Cancel</button>
+                          <button type="reset" class="btn btn-primary" ng-click="resetfb()" >Cancel</button>
                         </div>
                       </div>
                     </div>
-                    
-                    
+                    <!-- View window -->
+                    <div class="col-md-7" ng-show="fbaction == 'view'">
+
+                      <p>Collection Name</p>
+                      <p class="lead text-left text-primary">{{datasocial.collection_name}}</p>
+                      <p>Facebook Like Page Id</p>
+                      <p class="lead text-left text-primary">{{datasocial.fb_like_page_id}}</p>
+                      <p>Facebook Access Token</p>
+                      <p class="lead text-left text-primary">{{datasocial.access_token}}</p>
+                      
+                      
+                      
+                    </div>
+
+                    <div class="col-md-5" ng-show="fbaction == 'view'">
+                      <p>Feed Limit : <span class="lead text-left text-primary">{{datasocial.fb_feed_limit}}</span></p>
+                      <p>Created at</p>
+                      <p class="lead text-left text-primary">{{datasocial.created_at}}</p>
+                      <p>Status</p>
+                      <p class="text-left text-primary"><span class="label label-success">Valid</span></p>
+                      <p>Processing Status</p>
+                      <p class="text-left text-primary"><span class="label label-warning">In Progress</span></p>
+
+                      <p> 
+                        <button type="submit" class="btn btn-primary"  ng-click="editfb(datasocial.id)">
+                            <i class="fa fa-fw -circle-o fa-edit"></i>Edit</button>
+                        <button type="submit" class="btn btn-primary"  ng-click="deletefb(datasocial.id)">
+                            <i class="fa fa-fw -circle-o fa-trash"></i>Delete</button>    
+                          </p>
+                    </div>
                        
                   </form>
                 </div>

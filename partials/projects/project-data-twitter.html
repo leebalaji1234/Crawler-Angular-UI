@@ -1,55 +1,111 @@
-<div class="col-md-10">
+<div class="col-md-10"  >
             <div class="panel panel-primary">
               <div class="panel-heading">
                 <h3 class="panel-title">
                   <i class="fa fa-fw fa-twitter"></i>Twitter</h3>
               </div>
               <div class="panel-body">
-                <form role="form">
+                <form role="form" name="datatwitterForm" ng-submit="updateTSocial()"   novalidate>
                   <div class="col-md-5">
-                    <div class="form-group required">
+                    <div class="form-group required" ng-class="{ 'has-error' : datatwitterForm.collection_name.$invalid && !datatwitterForm.collection_name.$pristine }">
                       <label class="control-label" for="exampleInputEmail1">Collection Name</label>
-                      <input class="form-control" id="exampleInputEmail1" placeholder="Enter collection name" type="text">
+                      <input class="form-control" id="exampleInputEmail1" placeholder="Enter collection name" type="text" name="collection_name" ng-model="datasocial.collection_name" ng-minlength="1" ng-maxlength="40" ng-change="verifyTDuplicate()"  required />
+                       <p ng-show="datatwitterForm.collection_name.$error.required && datatwitterForm.collection_name.$invalid && !datatwitterForm.collection_name.$pristine " class="help-block" >
+                        Collection name is required !
+                        </p>
+                        <p ng-show="datatwitterForm.collection_name.$error.maxlength && datatwitterForm.collection_name.$invalid && !datatwitterForm.collection_name.$pristine" class="help-block" >
+                            Maximum length allowed is 40 !
+                        </p>
+                        <p ng-show="datatwitterForm.collection_name.$error.duplicate && datatwitterForm.collection_name.$invalid && !datatwitterForm.collection_name.$pristine"  class="help-block" >
+                            Duplicates not allowed !
+                        </p>
+
                     </div>
-                    <div class="form-group required">
+                    <div class="form-group required" ng-class="{ 'has-error' : datatwitterForm.consumer_key.$invalid && !datatwitterForm.consumer_key.$pristine }">
                       <label class="control-label" for="exampleInputEmail1">Twitter Consumer Key</label>
-                      <input class="form-control" id="exampleInputEmail1" placeholder="Enter twitter consumer key" type="text">
+                      <input class="form-control" id="exampleInputEmail1" placeholder="Enter twitter consumer key" type="text" name="consumer_key" ng-model="datasocial.consumer_key"    ng-minlength="1" ng-maxlength="390"  required />
+                      <p ng-show="datatwitterForm.consumer_key.$error.required && datatwitterForm.consumer_key.$invalid && !datatwitterForm.consumer_key.$pristine " class="help-block" >
+                        Consumer key required !
+                        </p>
+                        <p ng-show="datatwitterForm.consumer_key.$error.maxlength && datatwitterForm.consumer_key.$invalid && !datatwitterForm.consumer_key.$pristine" class="help-block" >
+                         Maximum length allowed is 390 !
+                        </p>
+
                     </div>
-                    <div class="form-group required">
+                    <div class="form-group required" ng-class="{ 'has-error' : datatwitterForm.consumer_secret.$invalid && !datatwitterForm.consumer_secret.$pristine }">
                       <label class="control-label" for="exampleInputEmail1">Twitter Consumer Secret</label>
-                      <input class="form-control" id="exampleInputEmail1" placeholder="Enter twitter consumer secret" type="text">
+                      <input class="form-control" id="exampleInputEmail1" placeholder="Enter twitter consumer secret" type="text" name="consumer_secret" ng-model="datasocial.consumer_secret"    ng-minlength="1" ng-maxlength="390"  required/>
+
+                      <p ng-show="datatwitterForm.consumer_secret.$error.required && datatwitterForm.consumer_secret.$invalid && !datatwitterForm.consumer_secret.$pristine " class="help-block" >
+                        Consumer secret required !
+                        </p>
+                        <p ng-show="datatwitterForm.consumer_secret.$error.maxlength && datatwitterForm.consumer_secret.$invalid && !datatwitterForm.consumer_secret.$pristine" class="help-block" >
+                            Maximum length allowed is 390 !
+                        </p>
+
                     </div>
-                    <div class="form-group required">
+                    <div class="form-group required"  ng-class="{ 'has-error' : datatwitterForm.access_token.$invalid && !datatwitterForm.access_token.$pristine }">
                       <label class="control-label" for="exampleInputEmail1">Twitter Access Token</label>
-                      <input class="form-control" id="exampleInputEmail1" placeholder="Enter twitter access token" type="text">
+                      <input class="form-control" id="exampleInputEmail1" placeholder="Enter twitter access token" type="text" name="access_token"  ng-model="datasocial.access_token" ng-minlength="1" ng-maxlength="390"  required />
+
+                      <p ng-show="datatwitterForm.access_token.$error.required && datatwitterForm.access_token.$invalid && !datatwitterForm.access_token.$pristine " class="help-block" >
+                        Access token required !
+                        </p>
+                        <p ng-show="datatwitterForm.access_token.$error.maxlength && datatwitterForm.access_token.$invalid && !datatwitterForm.access_token.$pristine" class="help-block" >
+                            Maximum length allowed is 390 !
+                        </p>
+
+
                     </div>
-                    <div class="form-group required">
+                    <div class="form-group required"  ng-class="{ 'has-error' : datatwitterForm.access_secret.$invalid && !datatwitterForm.access_secret.$pristine }">
                       <label class="control-label" for="exampleInputEmail1">Twitter Access Secret</label>
-                      <input class="form-control" id="exampleInputEmail1" placeholder="Enter twitter access secret" type="text">
+                      <input class="form-control" id="exampleInputEmail1" placeholder="Enter twitter access secret" type="text" name="access_secret" ng-model="datasocial.access_secret" ng-minlength="1" ng-maxlength="390"  required /> 
+
+                      <p ng-show="datatwitterForm.access_secret.$error.required && datatwitterForm.access_secret.$invalid && !datatwitterForm.access_secret.$pristine " class="help-block" >
+                        Access secret required !
+                        </p>
+                        <p ng-show="datatwitterForm.access_secret.$error.maxlength && datatwitterForm.access_secret.$invalid && !datatwitterForm.access_secret.$pristine" class="help-block" >
+                            Maximum length allowed is 390 !
+                        </p>
+
+
                     </div>
                   </div>
                   <div class="col-md-5">
                      
                       
-                    <div class="form-group ">
+                    <div class="form-group "  ng-class="{ 'has-error' : datatwitterForm.geo_lat.$invalid && !datatwitterForm.geo_lat.$pristine }" >
                       <label class="control-label" for="exampleInputEmail1">Latitude</label>
-                      <input class="form-control" id="exampleInputEmail1" type="text">
+                      <input class="form-control" id="exampleInputEmail1" type="text" name="geo_lat" ng-model="datasocial.geo_lat" ng-minlength="1" ng-maxlength="35" />
+
+                      <p ng-show="datatwitterForm.geo_lat.$error.maxlength && datatwitterForm.geo_lat.$invalid && !datatwitterForm.geo_lat.$pristine" class="help-block" >
+                            Maximum length allowed is 35 !
+                        </p>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{ 'has-error' : datatwitterForm.geo_lon.$invalid && !datatwitterForm.geo_lon.$pristine }">
                       <label class="control-label" for="exampleInputEmail1">Longitude</label>
-                      <input class="form-control" id="exampleInputEmail1" type="text">
+                      <input class="form-control" id="exampleInputEmail1" type="text" name="geo_lon" ng-model="datasocial.geo_lon" ng-minlength="1" ng-maxlength="35"/>
+
+                      <p ng-show="datatwitterForm.geo_lon.$error.maxlength && datatwitterForm.geo_lon.$invalid && !datatwitterForm.geo_lon.$pristine" class="help-block" >
+                            Maximum length allowed is 35 !
+                        </p>
                     </div>
                     <hr>
-                    <div class="form-group">
+                    <div class="form-group" ng-class="{ 'has-error' : datatwitterForm.twitter_hastags.$invalid && !datatwitterForm.twitter_hastags.$pristine }">
                       <label class="control-label" for="exampleInputEmail1">Hashtags (Keywords)</label>
-                      <textarea class="form-control" id="exampleInputEmail1"></textarea>
+                      <textarea class="form-control" id="exampleInputEmail1" name="twitter_hastags" ng-model="datasocial.twitter_hastags" ng-minlength="1" ng-maxlength="1990" ></textarea>
+
+                      <p ng-show="datatwitterForm.twitter_hastags.$error.maxlength && datatwitterForm.twitter_hastags.$invalid && !datatwitterForm.twitter_hastags.$pristine" class="help-block" >
+                            Maximum length allowed is 1990 !
+                        </p>
+
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-sm-3 col-sm-offset-6 text-right">
-                      <button type="submit" class="btn btn-primary">
+                      <button type="submit" class="btn btn-primary" ng-disabled="datatwitterForm.$invalid">
                         <i class="fa fa-fw -circle-o fa-save"></i>Save</button>
-                      <button type="submit" class="btn btn-primary">Cancel</button>
+                      <button type="reset" class="btn btn-primary" ng-click="resetTSocial()">Cancel</button>
                     </div>
                   </div>
                 </form>
