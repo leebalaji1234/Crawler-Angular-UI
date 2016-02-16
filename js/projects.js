@@ -272,7 +272,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
               $scope.datasocial.channel_id = $scope.channel_id;
 
               DataSocialsListFactory.create($scope.datasocial,function(response){ 
-                 $scope.datasocials = $scope.listSocials();
+                 $scope.listSocials();
                  $scope.datasocial={};
                  $scope.resetfb();
               });
@@ -280,7 +280,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
               DataSocialFactory.update($scope.datasocial,function(response){ 
                     $scope.datasocial={};
                     $scope.resetfb();
-                    $scope.datasocials = $scope.listSocials();
+                    $scope.listSocials();
                 });
 
             }
@@ -312,13 +312,14 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
     controller:function($scope,DataSocialsFactory,DataSocialFactory){
       $scope.datasocials = []; 
       $scope.fbaction = '';
-      $scope.statusVal = 'In Progress--12';
+      
       $scope.listSocials = function(){
         if(($scope.project_id != "" || $scope.project_id != undefined) && ($scope.channel_id != "" || $scope.channel_id != undefined) ){
           dataParams = {project_id:$scope.project_id, channel_id:$scope.channel_id}; 
           $scope.datasocials = DataSocialsFactory.query(dataParams); 
         }
       };
+
       $scope.getProcessStatus = function(code){
            var codeVal;
            if(code == "200"){ codeVal = "In Progress";}
@@ -350,7 +351,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
              
             if(confirm('Are you sure want to delete?')){
               DataSocialFactory.delete({id: dataSocialId});
-              $scope.datasocials = $scope.listSocials();
+              $scope.listSocials();
             } 
        };
 
@@ -394,7 +395,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
               $scope.datasocial.channel_id = $scope.channel_id;
 
               DataSocialsListFactory.create($scope.datasocial,function(response){ 
-                 $scope.datasocials = $scope.listSocials();
+                 $scope.listSocials();
                  $scope.datasocial={};
                  $scope.resetTSocial();
               });
@@ -402,7 +403,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
               DataSocialFactory.update($scope.datasocial,function(response){ 
                     $scope.datasocial={};
                     $scope.resetTSocial();
-                    $scope.datasocials = $scope.listSocials();
+                    $scope.listSocials();
                 });
 
             }
@@ -482,7 +483,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
               $scope.datasocial.channel_id = $scope.channel_id;
 
               DataSocialsListFactory.create($scope.datasocial,function(response){ 
-                 $scope.datasocials = $scope.listSocials();
+                 $scope.listSocials();
                  $scope.datasocial={};
                  $scope.resetISocial();
               });
@@ -490,7 +491,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
               DataSocialFactory.update($scope.datasocial,function(response){ 
                     $scope.datasocial={};
                     $scope.resetISocial();
-                    $scope.datasocials = $scope.listSocials();
+                    $scope.listSocials();
                 });
 
             }
