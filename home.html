@@ -13,12 +13,14 @@
         <script type="text/javascript" src="js/tabs.js"></script> 
         <script type="text/javascript" src="js/projects.js"></script>
          
+         
         
         <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="custom.css" rel="stylesheet" type="text/css">
 
-    </head><body ng-app="btProduct"  ng-switch="tab">
+    </head>
+    <body ng-app="btProduct"  ng-switch="tab">
         <div class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -85,8 +87,8 @@
             </div>
         </div>
          
-
-<projectscontainer ng-switch-when="/projects" ></projectscontainer>
+<section ng-view></section>
+<!-- <projectscontainer ng-switch-when="/projects" ></projectscontainer> -->
 
 
 
@@ -99,7 +101,7 @@
           </div>
         </div>
       </div>
-    </footer>
+</footer>
  
 </body>
 </html>

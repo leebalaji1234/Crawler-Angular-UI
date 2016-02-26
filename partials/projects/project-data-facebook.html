@@ -75,7 +75,7 @@
                       <p>Facebook Like Page Id</p>
                       <p class="lead text-left text-primary">{{datasocial.fb_like_page_id}}</p>
                       <p>Facebook Access Token</p>
-                      <p class="lead text-left text-primary">{{datasocial.access_token}}</p>
+                      <p class="lead text-left text-primary" style="word-wrap: break-word;">{{datasocial.access_token}}</p>
                       
                       
                       
@@ -85,10 +85,10 @@
                       <p>Feed Limit : <span class="lead text-left text-primary">{{datasocial.fb_feed_limit}}</span></p>
                       <p>Created at</p>
                       <p class="lead text-left text-primary">{{datasocial.created_at}}</p>
-                      <p>Status</p>
-                      <p class="text-left text-primary"><span class="label label-success">Valid</span></p>
+                      
                       <p>Processing Status</p>
-                      <p class="text-left text-primary"><span class="label label-warning">In Progress</span></p>
+                      <p class="text-left text-primary" >
+                        <span class="label" ng-class="{'label-warning': datasocial.status != '300', 'label-success': datasocial.status == '300','label-danger': datasocial.status == '400'}">{{getProcessStatus(datasocial.status)}}</span></p>
 
                       <p> 
                         <button type="submit" class="btn btn-primary"  ng-click="editfb(datasocial.id)">

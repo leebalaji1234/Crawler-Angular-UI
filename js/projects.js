@@ -27,6 +27,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
        };
        $scope.$watch('projectForm', function(projectForm) {
           if(projectForm) {  
+              
               console.log('projectForm in Scope');
           }
           else { 
@@ -188,7 +189,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
        }; 
 
        $scope.listWebs = function(){
-
+         $scope.newDataWeb();
          if(($scope.project_id != '' && $scope.project_id != undefined)){
           console.log("on load display ::"+ $scope.project_id);
             $scope.datawebs = DataWebsFactory.query({project_id: $scope.project_id});
@@ -314,6 +315,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
       $scope.fbaction = '';
       
       $scope.listSocials = function(){
+        $scope.datasocial = {};
         if(($scope.project_id != "" || $scope.project_id != undefined) && ($scope.channel_id != "" || $scope.channel_id != undefined) ){
           dataParams = {project_id:$scope.project_id, channel_id:$scope.channel_id}; 
           $scope.datasocials = DataSocialsFactory.query(dataParams); 

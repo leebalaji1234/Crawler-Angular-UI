@@ -1,10 +1,16 @@
 $appconfig = {"host":"http://localhost:3000"}; 
+ var tabname;
 angular
 .module('btProduct', ['ngRoute','ngAnimate','tab-directives','project-directives'])
 .config(function ($routeProvider) {
     $routeProvider
       .when('/projects', { 
-        // templateUrl: 'partials/projects/projects.html'
+        template: function($scope){ $scope.projecttab = 'project';  return '<projectscontainer></projectscontainer>' },
+
+         
+       })
+       .when('/data-sources', { 
+        template: "<projectdata ng-show=\"checkProjectTab('data')\"  ></projectdata>"
          
        }) 
       .otherwise({
@@ -23,3 +29,4 @@ angular
     }
   };
 });
+ 

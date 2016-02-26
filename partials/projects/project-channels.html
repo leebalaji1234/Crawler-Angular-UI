@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+               <div class="panel-body">
+                  <p></p>
+                  <ul class="nav nav-pills nav-stacked">
+                     <li class="bg-change" ng-class="{active: datatab== 'web'}" >
+                        <a     ng-click="setdataTab('web'); listWebs()"><i class="fa fa-fw fa-globe"></i>Web</a>
+                     </li>
+                     <li class="divider"></li>
+                     </ul>
+                     <ul class="nav nav-pills nav-stacked"   ng-repeat="channel in channels">
+                     <li class="bg-change" ng-class="{active: datatab== channel.channel_name}">
+                        <a   ng-click="selectChannel(channel.id); setdataTab(channel.channel_name);  listSocials()"><i class="fa fa-fw fa-{{channel.channel_name | lowercase}}"></i>{{channel.channel_name}}</a>
+                     </li>
+                     <li class="divider"></li>
+                     
+                     </ul>
+                     <ul class="nav nav-pills nav-stacked">
+                      <li class="divider"></li>
+                     <li class="bg-change" ng-class="{active: datatab== 'database'}">
+                        <a href="#" ng-click="setdataTab('database')"><i class="fa fa-fw fa-database"></i>Database</a>
+                     </li>
+                  </ul>
+                  <p></p>
+               </div>
+            </div>
