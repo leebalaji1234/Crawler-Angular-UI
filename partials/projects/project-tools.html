@@ -1,0 +1,136 @@
+<div class="section">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-2">
+                  <div class="panel panel-default">
+                     <div class="panel-body">
+                        <p></p>
+                        <ul class="nav nav-pills nav-stacked">
+                           <li class="bg-change">
+                              <a href="#"><i class="fa fa-fw fa-globe"></i>Web</a>
+                           </li>
+                           <li class="bg-change">
+                              <a href="#"><i class="fa fa-fw fa-facebook"></i>Facebook</a>
+                           </li>
+                           <li class="bg-change">
+                              <a href="#"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                           </li>
+                           <li class="bg-change">
+                              <a href="#"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                           </li>
+                           <li class="bg-change">
+                              <a href="#"><i class="fa fa-fw fa-database"></i>Database</a>
+                           </li>
+                        </ul>
+                        <p></p>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-10">
+                  <div class="panel panel-primary">
+                     <div class="panel-heading">
+                        <h3 class="panel-title"> <i class="fa fa-fw fa-code-fork"></i>Tools</h3>
+                     </div>
+                     <div class="panel-body">
+                        <div class="col-md-13">
+                           <form role="form" name="toolForm" ng-submit="updateProjectTools()"   novalidate>
+                              <u><b>Extraction, Disambiguation and classification of entities and named entities</b></u>
+                              
+                              
+                                 <ul><div>
+                                    <input type="checkbox" id="select_all" /> Select all</div>
+                                    <b>Language of the input text</b> <label class="checkbox-inline" ng-repeat="language in languages">
+                                          {{language.text}}
+                                       </label>
+                                    <p>
+                                    <p> <strong>Provenance of types (LOD) </strong></p>
+                                    <div class="bootstrap-demo">
+                                       <label class="checkbox-inline" ng-repeat="lod in lods">
+                                        <input type="checkbox"  checklist-model="tool.lod" checklist-value="lod.id"> {{lod.text}}
+                                       </label> 
+                                      
+
+
+                                       <!--2nd-->
+                                       <p> <strong>General Annotations </strong></p>
+                                    <div class="bootstrap-demo">
+                                        <label class="checkbox-inline" ng-repeat="gannotate in gannotations">
+                                        <input type="checkbox"  checklist-model="tool.general_annotations" checklist-value="gannotate.id"> {{gannotate.text}}
+                                       </label>
+
+                                       <!--3rd-->
+                                       <p> <strong>Types of Entities to extract </strong></p>
+                                    <div class="bootstrap-demo">
+                                        <label class="checkbox-inline" ng-repeat="extract in extractions">
+                                        <input type="checkbox"  checklist-model="tool.entities_extract" checklist-value="extract.id"> {{extract.text}}
+                                       </label>
+
+                                       <!--4th-->
+                                       <div class="row">
+                                          <div class="col-md-3">
+                                             <p>
+                                             <p> <strong>Opendata Annotations</strong></p>
+                                             <div class="bootstrap-demo">
+                                                <label class="checkbox-inline" ng-repeat="oannotate in oannotations">
+                                                <input type="checkbox"  checklist-model="tool.opendata" checklist-value="oannotate.id"> {{oannotate.text}}
+                                                </label>
+                                             </div>
+                                             </p>
+                                             </p>
+                                          </div>
+                                          <div class="col-md-3">
+                                             
+                                            <p>
+                                             <p> <strong>Entity spotting method</strong></p>
+                                             <div class="bootstrap-demo">
+                                                <label class="checkbox-inline" ng-repeat="entityspot in entityspots">
+                                                <input type="checkbox"  
+                                                checklist-model="tool.spotting_method" checklist-value="entityspot.id"> {{entityspot.text}}
+                                                </label>
+                                             </div>
+                                             </p>
+                                          </div>
+                                          <div class="col-md-3">
+                                            <p>
+                                             <p> <strong>Entity Linking Method</strong></p>
+                                             <div class="bootstrap-demo">
+                                                <label class="checkbox-inline" ng-repeat="entitylink in entitylinks">
+                                                <input type="checkbox"  
+                                                checklist-model="tool.linking_method" checklist-value="entitylink.id"> {{entitylink.text}}
+                                                </label>
+                                             </div>
+                                             </p>
+                                          </div>
+                                          <div class="col-md-3">
+                                             <p>
+                                             <p> <strong>Disambiguation</p>
+                                             <div class="bootstrap-demo">
+                                                <label class="checkbox-inline" ng-repeat="disambiguate in disambiguations">
+                                                <input type="checkbox"  
+                                                checklist-model="tool.disambiguation" checklist-value="disambiguate.id"> {{disambiguate.text}}
+                                                </label>
+                                             </div>
+                                             </p>
+                                       </div>
+                                  
+                                       </p>
+                                       <div>
+                                       </div>
+                                       <div class="form-group ">
+                                          <div class="col-lg-8 col-lg-offset-3"><button type="submit" class="btn btn-primary">Save</button>
+                                             <button type="button" class="btn btn-primary">Cancel</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                        </div>
+                        <!--End-->
+                        </ul>
+                        
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      </div>

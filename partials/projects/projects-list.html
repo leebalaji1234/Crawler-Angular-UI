@@ -5,7 +5,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-2">
-                            <a class="btn btn-primary btn-sm" ng-click="newProject()">
+                            <a href="#projects" class="btn btn-primary btn-sm" ng-click="newProject()">
                                 <i class="fa fa-fw fa-plus-circle"></i>New Project
                             </a>
                         </div>
@@ -41,12 +41,12 @@
                                     </a>
                                 </td>
                                 <td class="text-center">
-                                    <a href="#" ng-click="setSelectedProject(project.id,'domains')"   class="btn   btn-lg" title="Domains" >
+                                    <a href="#domains" ng-click="setSelectedProject(project.id,'domains')"   class="btn   btn-lg" title="Domains" >
                                         <i class="fa fa-fw fa-clipboard"></i>
                                     </a>
                                 </td>
                                 <td class="text-center">
-                                    <a href="#" ng-click="setSelectedProject(project.id,'ontologies')" class="btn  btn-lg" title="Ontologies" >
+                                    <a href="#ontologies" ng-click="setSelectedProject(project.id,'ontologies')" class="btn  btn-lg" title="Ontologies" >
                                         <i class="fa fa-fw fa-copy"></i>
                                     </a>
                                 </td>
@@ -56,7 +56,7 @@
                                     </a>
                                 </td>
                                 <td class="text-center">
-                                    <a href="#" ng-click="setSelectedProject(project.id,'tools')" class="btn  btn-lg" title="Tools" >
+                                    <a href="#tools" ng-click="setSelectedProject(project.id,'tools'); selectedToolsList()" class="btn  btn-lg" title="Tools" >
                                         <i class="fa fa-fw fa-code-fork"></i>
                                     </a>
                                 </td>

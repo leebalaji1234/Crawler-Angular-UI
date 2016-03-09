@@ -15,14 +15,16 @@
                </div>
                <div class="col-md-1 ">
                   <div class="form-group">
-                     <input type="number" min="1" max="100" class="form-control input-sm" ng-model="pageSize"  />
+                     <input type="number" min="1" max="100" class="form-control input-sm" ng-model="fbpageSize"  />
                   </div>
                </div>
             </div>
             <table class="table table-bordered table-condensed table-hover table-striped"  >
-               <tbody   dir-paginate="socialfb in datasocials| orderBy:sortKey:reverse|filter:search|itemsPerPage:pageSize" current-page="currentPage" pagination-id="fb">
+                
+
+               <tbody   dir-paginate="socialfb in datasocials| orderBy:sortKey:reverse|filter:search|itemsPerPage:fbpageSize" pagination-id="facebookpagination" current-page="fbcurrentPage">
                   <tr>
-                     <td>{{ ($index + 1) + (currentPage - 1) * pageSize}}</td>
+                     <td>{{ ($index + 1) + (fbcurrentPage - 1) * fbpageSize}}</td>
                      <td>{{socialfb.collection_name}}</td>
                       
                       <td>
@@ -46,13 +48,13 @@
                   </tr>
                </thead>
             </table>
-            <div class="col-md-10 text-center">
-               <dir-pagination-controls
-                  max-size="5"
-                  direction-links="true"
-                  boundary-links="true" pagination-id="fb" >
-               </dir-pagination-controls>
-            </div>
+           <div class="col-md-10 text-center">
+            <dir-pagination-controls
+        max-size="5"
+        direction-links="true"
+        boundary-links="true" pagination-id="facebookpagination" >
+    </dir-pagination-controls>
+          </div>
          </div>
       </div>
    </div>

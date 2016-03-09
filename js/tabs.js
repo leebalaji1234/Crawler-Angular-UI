@@ -10,8 +10,10 @@ angular.module('tab-directives', [])
       $scope.datatab = 'web'; 
       $scope.channel_id = "";
       $scope.isDisplayed = false;
+      
       $scope.selectChannel  = function(channelId){
           $scope.channel_id = channelId; 
+          $scope
       };
 
       // if($location.path() != ''){
@@ -22,11 +24,11 @@ angular.module('tab-directives', [])
        
 
       $scope.checkProjectTab = function(tabName){ 
-        console.log("TabName is ::" + $scope.projecttab);
+        // console.log("TabName is ::" + $scope.projecttab);
         return $scope.projecttab === tabName;
       }
       $scope.checkDataTab = function(tabName){
-        console.log("PID ::::"+ $scope.project_id);
+        // console.log("PID ::::"+ $scope.project_id);
         if($scope.project_id == ''){
           $location.path("/projects");
         }

@@ -12,7 +12,16 @@ angular
        .when('/data-sources', { 
         template: "<projectdata ng-show=\"checkProjectTab('data')\"  ></projectdata>"
          
-       }) 
+       }).when('/ontologies', { 
+        template: "<ontologies></ontologies><projectlist></projectlist>"
+         
+       }).when('/domains', { 
+        template: "<domains></domains><projectlist></projectlist>"
+         
+       }).when('/tools', { 
+        template: "<tools></tools><projectlist></projectlist>"
+         
+       })   
       .otherwise({
         redirectTo: '/'
       });

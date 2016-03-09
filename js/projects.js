@@ -1,4 +1,4 @@
-angular.module('project-directives', ['angularUtils.directives.dirPagination','ngResource'])
+angular.module('project-directives', ['angularUtils.directives.dirPagination','ngResource','checklist-model'])
 .directive("projectlist", function() {
   return {
     restrict: 'E', 
@@ -106,6 +106,140 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
     exception.message += ' (caused by "' + cause + '")'; 
     throw exception;
   } 
+}).directive("domains", function() {
+  return {
+    restrict: 'E',
+    templateUrl: "partials/projects/project-domains.html",
+    controller:function($scope){
+     $scope.alldomains =[{"name":"Bank"},{"name":"Retail"},{"name":"Travels"}];
+    } 
+  };
+}).directive("ontologies", function() {
+  return {
+    restrict: 'E',
+    templateUrl: "partials/projects/project-ontologies.html",
+    controller:function($scope){
+     $scope.ontologies =[{"name":"Bank"},{"name":"Retail"},{"name":"Travels"}];
+    } 
+  };
+}).directive("tools", function() {
+  return {
+    restrict: 'E',
+    templateUrl: "partials/projects/project-tools.html",
+    controller:function($scope,ToolsFactory,ToolsPostFactory,ToolFactory,$location){
+       $scope.tool= {};
+
+       $scope.languages = [{id: 1, text: 'English'}];
+
+     
+       $scope.lods = [ {id: 1, text: 'DBPedia'},
+                        {id: 2, text: 'Geotagging'},
+                        {id: 3, text: 'YAGO'},
+                        {id: 4, text: 'Common Sense'},
+                        {id: 5, text: 'Wordnet'},
+                        {id: 6, text: 'Freebase'}
+                       ];
+
+       $scope.gannotations = [ 
+                        {id: 1, text: 'Phone Number'},
+                        {id: 2, text: 'Email'},
+                        {id: 3, text: 'Date'},
+                        {id: 4, text: 'Hashtags'},
+                        {id: 5, text: 'User Mentions'} 
+                       ]; 
+       $scope.extractions = [ 
+                        {id: 1, text: 'Named Entities Recognition'},
+                        {id: 2, text: 'Common Entities Recognition'}
+                       ];  
+       $scope.oannotations = [ 
+                        {id: 1, text: 'Product and Service Tagging'}
+                       ];     
+       $scope.entityspots = [ 
+                        {id: 1, text: 'POS Pattern based'}
+                       ];
+
+       $scope.entitylinks = [ 
+                        {id: 1, text: 'Lucene SKOS'}
+                       ];
+       $scope.disambiguations = [ 
+                        {id: 1, text: 'NER Disambigution'}
+                       ]; 
+      $scope.toolreset = function(){
+         if($scope.toolForm) {  
+              $scope.toolForm.$setPristine();
+              // $scope.projectForm.$setUntouched();
+              $scope.tool= {};
+          }  
+      } 
+      $scope.splitter = function(string) {
+          ngArray= string.split(',');  
+           return ngArray;
+      }
+      $scope.selectedToolsList = function(){
+        if($scope.project_id != "" || $scope.project_id != undefined){
+          toolParams = {'project_id':$scope.project_id};
+           ToolsFactory.query(toolParams,function(toolResult){
+            if(toolResult[0] != undefined){
+                $scope.tool.id = toolResult[0].id; 
+                $scope.tool.lod = $scope.splitter(toolResult[0].lod).map(function(item){ return parseInt(item); });
+                $scope.tool.general_annotations = $scope.splitter(toolResult[0].general_annotations).map(function(item){ return parseInt(item); });
+                $scope.tool.entities_extract = $scope.splitter(toolResult[0].entities_extract).map(function(item){ return parseInt(item); });
+                $scope.tool.opendata = $scope.splitter(toolResult[0].opendata).map(function(item){ return parseInt(item); });
+                $scope.tool.spotting_method = $scope.splitter(toolResult[0].spotting_method).map(function(item){ return parseInt(item); }); 
+                $scope.tool.linking_method = $scope.splitter(toolResult[0].linking_method).map(function(item){ return parseInt(item); });
+                $scope.tool.disambiguation = $scope.splitter(toolResult[0].disambiguation).map(function(item){ return parseInt(item); });     
+                // $scope.tool = { lod: [1, 2]}; 
+            }  
+                 
+          }); 
+        }
+      } 
+      if($scope.project_id == ''){ 
+          $location.path("/projects");
+        }else{
+          $scope.setTab('projects');
+          $scope.selectedToolsList();
+        }               
+
+      $scope.updateProjectTools = function () {
+           
+             
+            if($scope.toolForm.$valid){
+               if($scope.project_id != "" && $scope.project_id != undefined){
+                toolParams = {'project_id':$scope.project_id};
+                
+                $scope.tool.language = 1;
+                $scope.tool.project_id = $scope.project_id;
+                $scope.tool.lod = $scope.tool.lod.join(',');
+                $scope.tool.general_annotations = $scope.tool.general_annotations.join(',');
+                $scope.tool.entities_extract = $scope.tool.entities_extract.join(',');
+                $scope.tool.opendata = $scope.tool.opendata.join(',');
+                $scope.tool.spotting_method = $scope.tool.spotting_method.join(',');
+                $scope.tool.linking_method = $scope.tool.linking_method.join(',');
+                $scope.tool.disambiguation = $scope.tool.disambiguation.join(',');
+                 
+                 if($scope.tool.id == "" || $scope.tool.id == undefined){
+                    ToolsPostFactory.create($scope.tool,function(){  
+                       $scope.selectedToolsList();
+                       $scope.toolreset();
+                    });
+                  }else{
+                    ToolFactory.update($scope.tool,function(){  
+                       $scope.selectedToolsList();
+                       $scope.toolreset();
+                    });
+                  }
+
+
+              }else{
+               $location.path('/projects');
+              } 
+            }
+            
+        }
+      }
+      
+  };
 }).directive("projectdata", function() {
   return {
     restrict: 'E',
@@ -120,7 +254,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
   return {
     restrict: 'E',
     templateUrl: "partials/projects/project-data-web.html",
-    controller:function($scope,SchedulersFactory,DataWebsFactory,DataWebFactory){
+    controller:function($scope,SchedulersFactory,DataWebsFactory,DataWebPostFactory,DataWebFactory){
       $scope.schedulers = [];
       $scope.schedulers = SchedulersFactory.query();
       $scope.dataweb= {}; 
@@ -139,8 +273,8 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
             $scope.dataweb.project_id = $scope.project_id;
              // console.log($scope.dataweb);
             if($scope.dataweb.id == "" || $scope.dataweb.id == undefined){
-              DataWebsFactory.create($scope.dataweb,function(response){ 
-                 $scope.datawebs = $scope.listWebs();
+              DataWebPostFactory.create($scope.dataweb,function(response){ 
+                 $scope.listWebs();
                  $scope.dataweb={};
                  $scope.resetweb();
               });
@@ -148,7 +282,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
               DataWebFactory.update($scope.dataweb,function(response){ 
                  $scope.dataweb={};
                  $scope.resetweb();
-                 $scope.datawebs = $scope.listWebs();
+                 $scope.listWebs();
               });
 
             }
@@ -192,7 +326,9 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
          $scope.newDataWeb();
          if(($scope.project_id != '' && $scope.project_id != undefined)){
           console.log("on load display ::"+ $scope.project_id);
-            $scope.datawebs = DataWebsFactory.query({project_id: $scope.project_id});
+            DataWebsFactory.query({project_id: $scope.project_id},function(responseResult){
+              $scope.datawebs = responseResult;
+            });
 
          }
        }
@@ -312,13 +448,20 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
     templateUrl: "partials/projects/project-data-facebook-list.html",
     controller:function($scope,DataSocialsFactory,DataSocialFactory){
       $scope.datasocials = []; 
+      $scope.fbcurrentPage =1; 
+      $scope.fbpageSize = 2;  
       $scope.fbaction = '';
       
       $scope.listSocials = function(){
         $scope.datasocial = {};
         if(($scope.project_id != "" || $scope.project_id != undefined) && ($scope.channel_id != "" || $scope.channel_id != undefined) ){
+          // alert($scope.project_id);
+          // alert($scope.channel_id);
           dataParams = {project_id:$scope.project_id, channel_id:$scope.channel_id}; 
-          $scope.datasocials = DataSocialsFactory.query(dataParams); 
+           DataSocialsFactory.query(dataParams,function(responseData){
+           $scope.datasocials =responseData;
+          }); 
+            
         }
       };
 
@@ -357,7 +500,15 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
             } 
        };
 
-       
+       $scope.$watch('datasocials', function(datasocials) {
+          if(datasocials) {  
+              console.log('datasocials in Scope');
+          }
+          else { 
+
+              console.log('datafbForm in out of Scope');
+          }        
+      });
        $scope.$watch('datafbForm', function(datafbForm) {
           if(datafbForm) {  
               console.log('datafbForm in Scope');
@@ -567,6 +718,10 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
         query: { method: 'GET', params:{project_id: '@project_id'},isArray: true },
         create: { method: 'POST' }
     })
+}).factory('DataWebPostFactory', function ($resource) { 
+    return $resource($appconfig.host + '/source_webs.json', {}, { 
+        create: { method: 'POST' }
+    })
 }).factory('DataSocialsFactory', function ($resource) { 
     return $resource($appconfig.host + '/projects/:project_id/channels/:channel_id/source_socials.json', {}, {
         query: { method: 'GET', params:{project_id: '@project_id',channel_id: '@channel_id'},isArray: true },
@@ -583,5 +738,19 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
         update: { method: 'PUT', params: {id: '@id'} },
         delete: { method: 'DELETE', params: {id: '@id'} }
     })
+}).factory('ToolsFactory', function ($resource) { 
+    return $resource($appconfig.host + '/projects/:project_id/nlp_configs.json', {}, {
+        query: { method: 'GET', params:{project_id: '@project_id'}, isArray: true},
+        create: { method: 'POST'}
+    })
+}).factory('ToolsPostFactory', function ($resource) { 
+    return $resource($appconfig.host + '/nlp_configs.json', {}, { 
+        create: { method: 'POST'}
+    })
+}).factory('ToolFactory', function ($resource) { 
+    return $resource($appconfig.host + '/nlp_configs/:id.json', {}, {
+        show: { method: 'GET' },
+        update: { method: 'PUT', params: {id: '@id'} },
+        delete: { method: 'DELETE', params: {id: '@id'} }
+    })
 });
-

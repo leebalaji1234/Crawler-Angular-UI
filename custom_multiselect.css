@@ -1,0 +1,14 @@
+ .multiselectbox{
+         	border: 1px #dadada solid;
+          height:100px;
+          overflow-y:auto;
+          position: relative;
+  
+      }
+      
+      .multiselectbox label {
+          display: block;
+      }
+      .multiselectbox label:hover {
+          background-color: 5bc0de;
+      }

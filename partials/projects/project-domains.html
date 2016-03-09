@@ -1,0 +1,35 @@
+<div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <i class="fa fa-fw fa-clipboard"></i>Domains</h3>
+              </div>
+              <div class="panel-body">
+                <div class="col-md-6">
+                  <form role="form">
+                    
+                    <input type="text" class="form-control" ng-model="multiselectsearch" placeholder="Search here...">
+                    <div class="form-group multiselectbox">
+                    <label class="control-label" ng-repeat="domain in alldomains|filter:multiselectsearch"><input type="checkbox">{{domain.name}}</label>
+                       
+                    </div>
+                   <a class="selectOptionBtn btn btn-info" onclick="selectAll(this)">Select All</a>
+                    <a class="deselectOptionBtn btn btn-info" onclick="deselectAll(this)">Clear All</a>
+                    <div class="form-group">
+                      <div class="col-sm-8 col-sm-offset-8 text-left">
+                        <button type="submit" class="btn btn-primary">
+                          <i class="fa fa-fw -circle-o fa-save"></i>Save</button>
+                        <button type="submit" class="btn btn-primary">Cancel</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,52 @@
+<div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <i class="fa fa-fw fa-copy"></i>Ontologies</h3>
+              </div>
+              <div class="panel-body">
+                <div class="col-md-12">
+                  <form role="form">
+                    <div class="col-md-5">
+                   <label class="control-label " for="exampleInputEmail1">Select Ontologies </label> 
+                    <input type="text" class="form-control" ng-model="ontologysearch" placeholder="Search here...">
+                    <div class="form-group multiselectbox">
+                    <label class="control-label" ng-repeat="ontol in ontologies|filter:ontologysearch"><input type="checkbox">{{ontol.name}}</label>
+                       
+                    </div>
+                   <a class="selectOptionBtn btn btn-info" onclick="selectAll(this)">Select All</a>
+                    <a class="deselectOptionBtn btn btn-info" onclick="deselectAll(this)">Clear All</a>
+                  </div>
+                  <!-- Taxonomies -->
+                  <div class="col-md-1">
+                    (OR)
+                  </div>
+                  <div class="col-md-5">
+
+                   <label class="control-label " for="exampleInputEmail1">Select Taxonomies </label> 
+                    <input type="text" class="form-control" ng-model="taxsearch" placeholder="Search here...">
+                    <div class="form-group multiselectbox">
+                    <label class="control-label" ng-repeat="ontol in ontologies|filter:taxsearch"><input type="checkbox">{{ontol.name}}</label>
+                       
+                    </div>
+                   <a class="selectOptionBtn btn btn-info" onclick="selectAll(this)">Select All</a>
+                    <a class="deselectOptionBtn btn btn-info" onclick="deselectAll(this)">Clear All</a>
+                  </div>
+                    <div class="form-group">
+                      <div class="col-sm-6 col-sm-offset-4 text-left">
+                        <button type="submit" class="btn btn-primary">
+                          <i class="fa fa-fw -circle-o fa-save"></i>Save</button>
+                        <button type="submit" class="btn btn-primary">Cancel</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
