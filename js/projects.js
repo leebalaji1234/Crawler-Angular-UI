@@ -247,7 +247,6 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
     controller:function($scope,ChannelsFactory){
       $scope.channels = [];
       $scope.channels = ChannelsFactory.query(); 
-
     }
   };
 }).directive("projectdatawebform", function() {
