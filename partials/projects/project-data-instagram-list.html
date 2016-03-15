@@ -9,31 +9,30 @@
                 </div>
                 <div class="col-md-3 text-left">
                   <div class="form-group has-warning">
-                  <input type="text" class="form-control input-sm" ng-model="search" placeholder="Search  Collections" />  
+                  <input type="text" class="form-control input-sm" ng-model="inssearch" placeholder="Search  Collections" />  
                   </div> 
                </div>
                <div class="col-md-1 ">
                             <div class="form-group">
-                                 <input type="number" min="1" max="100" class="form-control input-sm" ng-model="pageSize"  />
+                                 <input type="number" min="1" max="100" class="form-control input-sm" ng-model="inspageSize"  />
                             </div>
                 </div>
             </div>
             <table class="table table-bordered table-condensed table-hover table-striped">
-              <tbody dir-paginate="socialInstagram in datasocials| orderBy:sortKey:reverse|filter:search|itemsPerPage:pageSize" current-page="currentPage" pagination-id="instagram">
+              <tbody dir-paginate="socialInstagram in datasocials| orderBy:sortKey:reverse|filter:inssearch|itemsPerPage:inspageSize" current-page="inscurrentPage" pagination-id="instagram">
                 <tr>
-                  <td>{{ ($index + 1) + (currentPage - 1) * pageSize}}</td>
+                  <td>{{ ($index + 1) + (inscurrentPage - 1) * inspageSize}}</td>
                   <td>{{socialInstagram.collection_name}}</td>
-                  <td>
-                    <span class="label label-success">Valid</span>
-                  </td>
+                   
                    <td>
-                    <span class="label label-warning">In Progress</span>
+                    <!-- <span class="label label-warning">In Progress</span> -->
+                    <span class="label " ng-class="{'label-warning': socialInstagram.status != '300', 'label-success': socialInstagram.status == '300','label-danger': socialInstagram.status == '400'}">{{getProcessStatus(socialInstagram.status)}}</span>
                   </td>
                   <td>{{socialInstagram.created_at}}</td>
                   <td>
-                    <a href="#" class="btn  btn-md"><i class="fa fa-fw fa-eye"></i>&nbsp;View</a>
-                    <a href="#" class="btn  btn-md" ng-click="editI(socialInstagram.id)"><i class="fa fa-fw fa-edit"></i> Edit</a>
-                    <a href="#" class="btn  btn-md"><i class="fa fa-fw fa-trash"></i> Delete</a>
+                    <a href="#data-sources" class="btn  btn-md" ng-click="viewI(socialInstagram.id)"><i class="fa fa-fw fa-eye"></i> View</a>
+                    <a href="#data-sources" class="btn  btn-md" ng-click="editI(socialInstagram.id)"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                    <a href="#data-sources" class="btn  btn-md" ng-click="deleteI(socialInstagram.id)"><i class="fa fa-fw fa-trash"></i> Delete</a>
                   </td>
                 </tr>
                  
@@ -41,9 +40,8 @@
               <thead>
                 <tr>
                   <th class="btn-xs">#</th>
-                  <th class="btn-xs">Collection Name</th>
-                  <th class="btn-xs">&nbsp;Status</th>
-                  <th class="btn-xs"> Processing Status</th>
+                  <th class="btn-xs">Collection Name</th> 
+                  <th class="btn-xs" > Processing Status <a class="btn btn-default" ng-click="listSocials()"><i class="fa fa-fw fa-refresh" ></i></a></th>
                   <th class="btn-xs">Creation Time</th>
                   <th class="btn-xs">Actions</th>
                 </tr>

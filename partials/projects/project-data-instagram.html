@@ -7,7 +7,7 @@
       </div>
       <div class="panel-body">
          <form role="form"  name="datainstagramForm" ng-submit="updateISocial()"   novalidate>
-            <div class="col-md-5">
+            <div class="col-md-5" ng-show="insaction != 'view'">
                <div class="form-group required" ng-class="{ 'has-error' : datainstagramForm.collection_name.$invalid && !datainstagramForm.collection_name.$pristine }">
                   <label class="control-label" for="exampleInputEmail1">Collection Name</label>
                   <input class="form-control" id="exampleInputEmail1" placeholder="Enter collection name" type="text" name="collection_name"  ng-model="datasocial.collection_name" ng-change="verifyIDuplicate()" ng-minlength="1" ng-maxlength="40" required />
@@ -23,7 +23,7 @@
                </div>
                <div class="form-group required" ng-class="{ 'has-error' : datainstagramForm.access_token.$invalid && !datainstagramForm.access_token.$pristine }">
                   <label class="control-label" for="exampleInputEmail1" >Instagram Access Token</label>
-                  <input class="form-control" id="exampleInputEmail1" placeholder="Enter instagram access token" type="text" name="access_token" ng-model="datasocial.access_token"      ng-minlength="1" ng-maxlength="390" required />
+                  <input class="form-control" id="exampleInputEmail1" placeholder="Enter instagram access token" type="text" name="access_token" ng-model="datasocial.access_token"      ng-minlength="1" ng-maxlength="390" ng-disabled="insaction == 'edit'"  required />
                   <p ng-show="datainstagramForm.access_token.$error.required && datainstagramForm.access_token.$invalid && !datainstagramForm.access_token.$pristine " class="help-block" >
                      Access token is required !
                   </p>
@@ -34,8 +34,8 @@
                      Duplicates not allowed !
                   </p>
                </div>
-               <hr>
-               <div class="form-group col-sm-5 required" ng-class="{ 'has-error' : datainstagramForm.instagram_start_time.$invalid && !datainstagramForm.instagram_start_time.$pristine }">
+                
+               <!-- <div class="form-group col-sm-5 required" ng-class="{ 'has-error' : datainstagramForm.instagram_start_time.$invalid && !datainstagramForm.instagram_start_time.$pristine }">
                   <label class="control-label" for="exampleInputEmail1">Start time</label>
                   <input class="form-control"   placeholder="Enter start time" type="text" name="instagram_start_time" ng-model="datasocial.instagram_start_time"  ng-minlength="1" ng-maxlength="11" required/>
                   <p ng-show="datainstagramForm.instagram_start_time.$error.required && datainstagramForm.instagram_start_time.$invalid && !datainstagramForm.instagram_start_time.$pristine " class="help-block" >
@@ -48,40 +48,78 @@
                   <p ng-show="datainstagramForm.instagram_end_time.$error.required && datainstagramForm.instagram_end_time.$invalid && !datainstagramForm.instagram_end_time.$pristine " class="help-block" >
                      End time is required !
                   </p>
-               </div>
+               </div> -->
             </div>
-            <div class="col-md-5">
-               <div class="form-group" ng-class="{ 'has-error' : datainstagramForm.geo_lat.$invalid && !datainstagramForm.geo_lat.$pristine }">
+            <div class="col-md-5" ng-show="insaction != 'view'">
+               <p ng-show="datainstagramForm.geo_lat.$error.geosetval && datainstagramForm.geo_lat.$invalid && !datainstagramForm.geo_lat.$pristine" class="help-block" >
+                     Fillout details  Latitude & Longtitude !
+               </p>
+              <!--  <p ng-show="datainstagramForm.geo_lon.$error.geosetval && datainstagramForm.geo_lon.$invalid && !datainstagramForm.geo_lon.$pristine" class="help-block" >
+                     Fillout details  distance!
+               </p>
+               <p ng-show="datainstagramForm.distance.$error.geosetval && datainstagramForm.distance.$invalid && !datainstagramForm.distance.$pristine" class="help-block" >
+                     Fillout details Latitude!
+               </p> -->
+               <div class="form-group col-md-4" ng-class="{ 'has-error' : datainstagramForm.geo_lat.$invalid && !datainstagramForm.geo_lat.$pristine }">
                   <label class="control-label" for="exampleInputEmail1">Latitude</label>
-                  <input class="form-control" id="exampleInputEmail1" type="text" name="geo_lat" ng-model="datasocial.geo_lat" ng-minlength="1" ng-maxlength="35" />
+                  <input class="form-control geoset" id="exampleInputEmail1" type="text" name="geo_lat" ng-model="datasocial.geo_lat" ng-minlength="1" ng-maxlength="35" ins-geo-check="geoset" ng-disabled="insaction == 'edit'"  />
                   <p ng-show="datainstagramForm.geo_lat.$error.maxlength && datainstagramForm.geo_lat.$invalid && !datainstagramForm.geo_lat.$pristine" class="help-block" >
                      Maximum length allowed is 35 !
                   </p>
+
                </div>
-               <div class="form-group"  ng-class="{ 'has-error' : datainstagramForm.geo_lon.$invalid && !datainstagramForm.geo_lon.$pristine }">
+               <div class="form-group col-md-4"  ng-class="{ 'has-error' : datainstagramForm.geo_lon.$invalid && !datainstagramForm.geo_lon.$pristine }">
                   <label class="control-label" for="exampleInputEmail1">Longitude</label>
-                  <input class="form-control" id="exampleInputEmail1" type="text" name="geo_lon" ng-model="datasocial.geo_lon" ng-minlength="1" ng-maxlength="35"/>
+                  <input class="form-control geoset" id="exampleInputEmail1" type="text" name="geo_lon" ng-model="datasocial.geo_lon" ng-minlength="1" ng-maxlength="35" ins-geo-check="geoset" ng-disabled="insaction == 'edit'" />
                   <p ng-show="datainstagramForm.geo_lon.$error.maxlength && datainstagramForm.geo_lon.$invalid && !datainstagramForm.geo_lon.$pristine" class="help-block" >
                      Maximum length allowed is 35 !
                   </p>
+                  
                </div>
-               <hr>
-               <div class="form-group" ng-class="{ 'has-error' : datainstagramForm.instagram_tags.$invalid && !datainstagramForm.instagram_tags.$pristine }">
-                  <label class="control-label" for="exampleInputEmail1">Tags&nbsp;</label>
-                  <textarea class="form-control" id="exampleInputEmail1" ng-model="datasocial.instagram_tags" ng-minlength="1" ng-maxlength="1990"></textarea>
-                  <p ng-show="datainstagramForm.instagram_tags.$error.maxlength && datainstagramForm.instagram_tags.$invalid && !datainstagramForm.instagram_tags.$pristine" class="help-block" >
+              <!--  <div class="form-group col-md-5"  ng-class="{ 'has-error' : datainstagramForm.distance.$invalid && !datainstagramForm.distance.$pristine }">
+                  <label class="control-label" for="exampleInputEmail1">Distance</label>
+                  <input class="form-control geoset" id="exampleInputEmail1" type="text" name="distance" ng-model="datasocial.distance" ng-minlength="1" ng-maxlength="35" ins-geo-check="geoset"/>
+                  <p ng-show="datainstagramForm.distance.$error.maxlength && datainstagramForm.distance.$invalid && !datainstagramForm.distance.$pristine" class="help-block" >
+                     Maximum length allowed is 35 !
+                  </p>
+                  
+               </div> -->
+                
+               <div class="form-group col-md-8"  ng-class="{ 'has-error' : datainstagramForm.instagram_tags.$invalid && !datainstagramForm.instagram_tags.$pristine }">
+                  <label class="control-label" for="exampleInputEmail1">Hashtags&nbsp;</label>
+                  <textarea class="form-control" id="exampleInputEmail1" ng-model="datasocial.instagram_tags" ng-minlength="1" ng-maxlength="1990" ng-disabled="insaction == 'edit'" ></textarea>
+                  <p ng-show="datainstagramForm.instagram_tags.$error.maxlength && datainstagramForm.instagram_tags.$invalid && !datainstagramForm.instagram_tags.$pristine" class="help-block"  >
                      Maximum length allowed is 1990 !
                   </p>
                </div>
             </div>
-            <div class="form-group">
-               <div class="col-sm-3 col-sm-offset-6 text-right">
-                  <button type="submit" class="btn btn-primary" ng-disabled="datainstagramForm.$invalid">
+            <div class="form-group" ng-show="insaction != 'view'">
+               <div class="col-md-4 col-md-offset-4 text-right">
+                  <button type="submit" class="btn btn-primary" ng-disabled="datainstagramForm.$invalid || inscommit">
                   <i class="fa fa-fw -circle-o fa-save"></i>Save</button>
                   <button type="reset" class="btn btn-primary" ng-click="resetISocial()">Cancel</button>
                </div>
             </div>
          </form>
+
+         <div class="col-md-7" ng-show="insaction == 'view'"> 
+            <p>Collection Name</p>
+            <p class="lead text-left text-primary">{{datasocial.collection_name}}</p> 
+            <p>Instagram Access Token</p>
+            <p class="lead text-left text-primary" style="word-wrap: break-word;">{{datasocial.access_token}}</p> 
+            <p ng-show="datasocial.geo_lat">Latitude</p>
+            <p ng-show="datasocial.geo_lat" class="lead text-left text-primary" style="word-wrap: break-word;">{{datasocial.geo_lat}}</p>  
+            <p  ng-show="datasocial.geo_lon" >Longtitude</p>
+             <p ng-show="datasocial.geo_lon" class="lead text-left text-primary" style="word-wrap: break-word;">{{datasocial.geo_lon}}</p>  
+             <p ng-show="datasocial.instagram_tags" >Hash Tags</p>
+             <p ng-show="datasocial.instagram_tags" class="lead text-left text-primary" style="word-wrap: break-word;">{{datasocial.instagram_tags}}</p>
+            <p> 
+            <button type="submit" class="btn btn-primary"  ng-click="editI(datasocial.id)">
+            <i class="fa fa-fw -circle-o fa-edit"></i>Edit</button>
+            <button type="submit" class="btn btn-primary"  ng-click="deleteI(datasocial.id)">
+            <i class="fa fa-fw -circle-o fa-trash"></i>Delete</button>    
+            </p>
+         </div>
       </div>
    </div>
 </div>

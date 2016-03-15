@@ -27,7 +27,7 @@
                     <div class="form-group required" ng-class="{ 'has-error' : datafbForm.fb_like_page_id.$invalid && !datafbForm.fb_like_page_id.$pristine }">
                       <label class="control-label" for="exampleInputEmail1">Facebook Like Page Id</label>
                       <input class="form-control" id="exampleInputEmail1"
-                      placeholder="Enter FB Like Page Id" name="fb_like_page_id" ng-model="datasocial.fb_like_page_id" ng-minlength="1" ng-maxlength="390" type="text" 
+                      placeholder="Enter FB Like Page Id" name="fb_like_page_id" ng-model="datasocial.fb_like_page_id" ng-minlength="1" ng-maxlength="390" type="text" ng-disabled="fbaction == 'edit'"
                        required />
 
                       <p ng-show="datafbForm.fb_like_page_id.$error.required && datafbForm.fb_like_page_id.$invalid && !datafbForm.fb_like_page_id.$pristine " class="help-block" >
@@ -41,7 +41,7 @@
                     <div class="form-group required" ng-class="{ 'has-error' : datafbForm.access_token.$invalid && !datafbForm.access_token.$pristine }">
                       <label class="control-label" for="exampleInputEmail1">Facebook Access Token</label>
                       <input class="form-control" id="exampleInputEmail1" ng-model="datasocial.access_token"  name="access_token"
-                      placeholder="Enter FB access token" ng-minlength="1" ng-maxlength="390" type="text" required/>
+                      placeholder="Enter FB access token" ng-minlength="1" ng-maxlength="390" type="text" ng-disabled="fbaction == 'edit'" required/>
 
                       <p ng-show="datafbForm.access_token.$error.required && datafbForm.access_token.$invalid && !datafbForm.access_token.$pristine " class="help-block" >
                         Access token required !
@@ -55,7 +55,7 @@
                     <div class="form-group required" ng-class="{ 'has-error' : datafbForm.fb_feed_limit.$invalid && !datafbForm.fb_feed_limit.$pristine }">
                       <label class="control-label col-md-5" for="exampleInputEmail1">Feed Limit</label>
                       <div class="form-group col-md-2">
-                       <input type="number" min="1" max="100" class="form-control input-sm" ng-model="datasocial.fb_feed_limit" name="fb_feed_limit" ng-value="50"  required /> 
+                       <input type="number" min="1" max="100" class="form-control input-sm" ng-model="datasocial.fb_feed_limit" name="fb_feed_limit" ng-value="50"  required ng-disabled="fbaction == 'edit'" /> 
                         <p ng-show="datafbForm.fb_feed_limit.$error.required && datafbForm.fb_feed_limit.$invalid && !datafbForm.fb_feed_limit.$pristine " class="help-block" >
                         Feed limit required !
                         </p>
@@ -67,6 +67,8 @@
                         </div>
                       </div>
                     </div>
+
+                     </form>
                     <!-- View window -->
                     <div class="col-md-7" ng-show="fbaction == 'view'">
 
@@ -98,7 +100,7 @@
                           </p>
                     </div>
                        
-                  </form>
+                 
                 </div>
               </div>
             </div>

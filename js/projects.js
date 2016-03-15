@@ -494,8 +494,10 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
        $scope.deletefb = function (dataSocialId) { 
              
             if(confirm('Are you sure want to delete?')){
-              DataSocialFactory.delete({id: dataSocialId});
-              $scope.listSocials();
+              DataSocialFactory.delete({id: dataSocialId},function(){
+                $scope.listSocials();
+                 $scope.fbaction = "";
+              }); 
             } 
        };
 
@@ -614,6 +616,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
     templateUrl: "partials/projects/project-data-instagram.html",
     controller:function($scope,DataSocialsFactory,DataSocialsListFactory,DataSocialFactory){
       $scope.datasocial= {};  
+      $scope.inscommit=false;
        $scope.resetISocial = function() {
           
             if($scope.datainstagramForm) {  
@@ -633,13 +636,14 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
 
               $scope.datasocial.project_id = $scope.project_id;
               $scope.datasocial.channel_id = $scope.channel_id;
-
+              $scope.inscommit=true;
               DataSocialsListFactory.create($scope.datasocial,function(response){ 
                  $scope.listSocials();
                  $scope.datasocial={};
                  $scope.resetISocial();
               });
             }else{
+              $scope.inscommit=true;
               DataSocialFactory.update($scope.datasocial,function(response){ 
                     $scope.datasocial={};
                     $scope.resetISocial();
@@ -667,14 +671,42 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
 
     }
   };
-}).directive("projectdatainstagramlist", function() {
+}).directive('insGeoCheck', [function () {
+    return {
+      require: 'ngModel',
+      link: function (scope, elem, attrs, ctrl) {
+        var classElem = '.' + attrs.insGeoCheck;
+        // elem.add(classElem).on('keyup', function () {
+        elem.add(classElem).on('keyup', function () {
+          scope.$apply(function () {
+            var valueReturn = true;
+            $(classElem).each(function(){
+              if($(this).val() == ''){
+                valueReturn = false;
+                return false;
+              }
+            });
+             console.log(valueReturn);
+            ctrl.$setValidity('geosetval', valueReturn);
+          });
+        });
+      }
+    }
+}]).directive("projectdatainstagramlist", function() {
   return {
     restrict: 'E',
     templateUrl: "partials/projects/project-data-instagram-list.html",
     controller:function($scope,DataSocialFactory){
+
+      // $scope.datasocials = []; 
+      $scope.inscurrentPage =1; 
+      $scope.inspageSize = 2;  
+      $scope.insaction = '';
+
        $scope.newI = function () {
             
             $scope.datasocial = {};
+            $scope.insaction = '';
        };
      
       
@@ -682,6 +714,22 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
              
             $scope.datasocial = DataSocialFactory.show({id: dataSocialId}); 
             $scope.datainstagramForm.collection_name.$setValidity('duplicate',true);
+            $scope.insaction = 'edit';
+       };
+       $scope.viewI = function (dataSocialId) { 
+             
+            $scope.datasocial = DataSocialFactory.show({id: dataSocialId}); 
+            $scope.insaction = 'view';
+       };
+       $scope.deleteI = function (dataSocialId) { 
+             
+            if(confirm('Are you sure want to delete?')){
+              DataSocialFactory.delete({id: dataSocialId},function(){
+                $scope.listSocials();
+                $scope.insaction = "";
+              });
+              
+            } 
        };
 
        
