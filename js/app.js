@@ -1,8 +1,8 @@
 $appconfig = {
-  "host":"http://localhost:3000",
-  "ssoserver":"http://localhost:7777/",
-  "ssoclient":"http://localhost/ui/home.html",
-  "ssologout":"http://localhost:7777/logout?service=http://localhost/ui/home.html",
+  "host":"http://192.168.1.75:3000",
+  "ssoserver":"http://192.168.1.75:7777/",
+  "ssoclient":"http://52.74.156.37/btinfoactivweb/home.html",
+  "ssologout":"http://192.168.1.75:7777/logout?service=http://52.74.156.37/btinfoactivweb/home.html",
 
 }; 
  var tabname;
