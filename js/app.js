@@ -1,8 +1,8 @@
 $appconfig = {
   "host":"http://192.168.1.75:3000",
   "ssoserver":"http://192.168.1.75:7777/",
-  "ssoclient":"http://52.74.156.37/btinfoactivweb/home.html",
-  "ssologout":"http://192.168.1.75:7777/logout?service=http://52.74.156.37/btinfoactivweb/home.html",
+  "ssoclient":"http://localhost/ui/home.html",
+  "ssologout":"http://192.168.1.75:7777/logout?service=http://localhost/ui/home.html",
 
 }; 
  var tabname;
@@ -113,7 +113,7 @@ run.$inject = ['$rootScope' ,'$location' , '$cookieStore', '$timeout', '$http','
               var paramValue = getParameterByName('ticket')||"";
     
   if((angular.isUndefined(tgt) || tgt ===false) && tgt.length !=33){
-     $window.location.href = $appconfig.ssoserver +'login?service='+$appconfig.ssoclient;
+     //$window.location.href = $appconfig.ssoserver +'login?service='+$appconfig.ssoclient;
   }
 
   if(!angular.isUndefined(paramValue) && paramValue!="" && paramValue.length ==32){

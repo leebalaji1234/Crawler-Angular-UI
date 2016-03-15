@@ -60,7 +60,8 @@
                <p ng-show="datainstagramForm.distance.$error.geosetval && datainstagramForm.distance.$invalid && !datainstagramForm.distance.$pristine" class="help-block" >
                      Fillout details Latitude!
                </p> -->
-               <div class="form-group col-md-4" ng-class="{ 'has-error' : datainstagramForm.geo_lat.$invalid && !datainstagramForm.geo_lat.$pristine }">
+               <p><label><input type="radio" ng-checked="datasocial.geo_lat" ng-model="type" value="geo" /> Geo  </label>   <label><input type="radio" ng-checked="datasocial.instagram_tags" ng-model="type" value="hash" /> Hashtags  </label></p>
+               <div class="form-group col-md-4" ng-show="type =='geo' || datasocial.geo_lat" ng-class="{ 'has-error' : datainstagramForm.geo_lat.$invalid && !datainstagramForm.geo_lat.$pristine }">
                   <label class="control-label" for="exampleInputEmail1">Latitude</label>
                   <input class="form-control geoset" id="exampleInputEmail1" type="text" name="geo_lat" ng-model="datasocial.geo_lat" ng-minlength="1" ng-maxlength="35" ins-geo-check="geoset" ng-disabled="insaction == 'edit'"  />
                   <p ng-show="datainstagramForm.geo_lat.$error.maxlength && datainstagramForm.geo_lat.$invalid && !datainstagramForm.geo_lat.$pristine" class="help-block" >
@@ -68,7 +69,7 @@
                   </p>
 
                </div>
-               <div class="form-group col-md-4"  ng-class="{ 'has-error' : datainstagramForm.geo_lon.$invalid && !datainstagramForm.geo_lon.$pristine }">
+               <div class="form-group col-md-4" ng-show="type =='geo' || datasocial.geo_lon"  ng-class="{ 'has-error' : datainstagramForm.geo_lon.$invalid && !datainstagramForm.geo_lon.$pristine }">
                   <label class="control-label" for="exampleInputEmail1">Longitude</label>
                   <input class="form-control geoset" id="exampleInputEmail1" type="text" name="geo_lon" ng-model="datasocial.geo_lon" ng-minlength="1" ng-maxlength="35" ins-geo-check="geoset" ng-disabled="insaction == 'edit'" />
                   <p ng-show="datainstagramForm.geo_lon.$error.maxlength && datainstagramForm.geo_lon.$invalid && !datainstagramForm.geo_lon.$pristine" class="help-block" >
@@ -85,7 +86,7 @@
                   
                </div> -->
                 
-               <div class="form-group col-md-8"  ng-class="{ 'has-error' : datainstagramForm.instagram_tags.$invalid && !datainstagramForm.instagram_tags.$pristine }">
+               <div class="form-group col-md-8" ng-show="type =='hash' || datasocial.instagram_tags"  ng-class="{ 'has-error' : datainstagramForm.instagram_tags.$invalid && !datainstagramForm.instagram_tags.$pristine }">
                   <label class="control-label" for="exampleInputEmail1">Hashtags&nbsp;</label>
                   <textarea class="form-control" id="exampleInputEmail1" ng-model="datasocial.instagram_tags" ng-minlength="1" ng-maxlength="1990" ng-disabled="insaction == 'edit'" ></textarea>
                   <p ng-show="datainstagramForm.instagram_tags.$error.maxlength && datainstagramForm.instagram_tags.$invalid && !datainstagramForm.instagram_tags.$pristine" class="help-block"  >

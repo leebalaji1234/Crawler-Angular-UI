@@ -714,6 +714,7 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
              
             $scope.datasocial = DataSocialFactory.show({id: dataSocialId}); 
             $scope.datainstagramForm.collection_name.$setValidity('duplicate',true);
+            $scope.datainstagramForm.$setValidity('geosetval', true);
             $scope.insaction = 'edit';
        };
        $scope.viewI = function (dataSocialId) { 
