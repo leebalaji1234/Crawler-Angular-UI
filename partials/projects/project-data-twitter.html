@@ -6,7 +6,7 @@
               </div>
               <div class="panel-body">
                 <form role="form" name="datatwitterForm" ng-submit="updateTSocial()"   novalidate>
-                  <div class="col-md-5">
+                  <div class="col-md-5" ng-show="taction != 'view'">
                     <div class="form-group required" ng-class="{ 'has-error' : datatwitterForm.collection_name.$invalid && !datatwitterForm.collection_name.$pristine }">
                       <label class="control-label" for="exampleInputEmail1">Collection Name</label>
                       <input class="form-control" id="exampleInputEmail1" placeholder="Enter collection name" type="text" name="collection_name" ng-model="datasocial.collection_name" ng-minlength="1" ng-maxlength="40" ng-change="verifyTDuplicate()"  required />
@@ -71,10 +71,10 @@
 
                     </div>
                   </div>
-                  <div class="col-md-5">
+                  <div class="col-md-5" ng-show="taction != 'view'">
                      
-                      
-                    <div class="form-group "  ng-class="{ 'has-error' : datatwitterForm.geo_lat.$invalid && !datatwitterForm.geo_lat.$pristine }" >
+                      <p  ng-init="type=geo"><label><input type="radio" ng-checked="datasocial.geo_lat" ng-model="type" name="type" value="geo" /> Geo  </label>   <label><input type="radio" ng-checked="datasocial.twitter_hastags" ng-model="type" name="type" value="hash" /> Hashtags  </label></p>
+                    <div class="form-group " ng-show="type =='geo' || datasocial.geo_lat"  ng-class="{ 'has-error' : datatwitterForm.geo_lat.$invalid && !datatwitterForm.geo_lat.$pristine }" >
                       <label class="control-label" for="exampleInputEmail1">Latitude</label>
                       <input class="form-control" id="exampleInputEmail1" type="text" name="geo_lat" ng-model="datasocial.geo_lat" ng-minlength="1" ng-maxlength="35" />
 
@@ -82,7 +82,7 @@
                             Maximum length allowed is 35 !
                         </p>
                     </div>
-                    <div class="form-group" ng-class="{ 'has-error' : datatwitterForm.geo_lon.$invalid && !datatwitterForm.geo_lon.$pristine }">
+                    <div class="form-group" ng-show="type =='geo' || datasocial.geo_lat"  ng-class="{ 'has-error' : datatwitterForm.geo_lon.$invalid && !datatwitterForm.geo_lon.$pristine }">
                       <label class="control-label" for="exampleInputEmail1">Longitude</label>
                       <input class="form-control" id="exampleInputEmail1" type="text" name="geo_lon" ng-model="datasocial.geo_lon" ng-minlength="1" ng-maxlength="35"/>
 
@@ -90,9 +90,19 @@
                             Maximum length allowed is 35 !
                         </p>
                     </div>
+
+                      <div class="form-group" ng-show="type =='geo' || datasocial.geo_lat" ng-class="{ 'has-error' : datatwitterForm.twitter_keywords.$invalid && !datatwitterForm.twitter_keywords.$pristine }">
+                      <label class="control-label" for="exampleInputEmail1">Keywords</label>
+                      <textarea class="form-control" id="exampleInputEmail1" name="twitter_keywords" ng-model="datasocial.twitter_keywords" ng-minlength="1" ng-maxlength="1990" ></textarea>
+
+                      <p ng-show="datatwitterForm.twitter_keywords.$error.maxlength && datatwitterForm.twitter_keywords.$invalid && !datatwitterForm.twitter_keywords.$pristine" class="help-block" >
+                            Maximum length allowed is 1990 !
+                        </p>
+
+                    </div>
                     <hr>
-                    <div class="form-group" ng-class="{ 'has-error' : datatwitterForm.twitter_hastags.$invalid && !datatwitterForm.twitter_hastags.$pristine }">
-                      <label class="control-label" for="exampleInputEmail1">Hashtags (Keywords)</label>
+                    <div class="form-group"  ng-show="type =='hash' || datasocial.twitter_hastags" ng-class="{ 'has-error' : datatwitterForm.twitter_hastags.$invalid && !datatwitterForm.twitter_hastags.$pristine }">
+                      <label class="control-label" for="exampleInputEmail1">Hashtags</label>
                       <textarea class="form-control" id="exampleInputEmail1" name="twitter_hastags" ng-model="datasocial.twitter_hastags" ng-minlength="1" ng-maxlength="1990" ></textarea>
 
                       <p ng-show="datatwitterForm.twitter_hastags.$error.maxlength && datatwitterForm.twitter_hastags.$invalid && !datatwitterForm.twitter_hastags.$pristine" class="help-block" >
@@ -101,14 +111,51 @@
 
                     </div>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group" ng-show="taction != 'view'">
                     <div class="col-sm-3 col-sm-offset-6 text-right">
-                      <button type="submit" class="btn btn-primary" ng-disabled="datatwitterForm.$invalid">
+                      <button type="submit" class="btn btn-primary" ng-disabled="datatwitterForm.$invalid || tcommit">
                         <i class="fa fa-fw -circle-o fa-save"></i>Save</button>
                       <button type="reset" class="btn btn-primary" ng-click="resetTSocial()">Cancel</button>
                     </div>
                   </div>
                 </form>
-              </div>
-            </div>
+
+                <div class="col-md-7" ng-show="taction == 'view'"> 
+            <p>Collection Name</p>
+            <p class="lead text-left text-primary">{{datasocial.collection_name}}</p> 
+            <p>Twitter Consumer Key</p>
+            <p class="lead text-left text-primary" style="word-wrap: break-word;">{{datasocial.consumer_key}}</p>
+            <p>Twitter Consumer Secret</p>
+            <p class="lead text-left text-primary" style="word-wrap: break-word;">{{datasocial.consumer_secret}}</p>
+            <p>Twitter Access Token</p>
+            <p class="lead text-left text-primary" style="word-wrap: break-word;">{{datasocial.access_token}}</p>
+            <p>Twitter Access Secret</p>
+            <p class="lead text-left text-primary" style="word-wrap: break-word;">{{datasocial.access_secret}}</p> 
+            <p ng-show="datasocial.geo_lat">Latitude</p>
+            <p ng-show="datasocial.geo_lat" class="lead text-left text-primary" style="word-wrap: break-word;">{{datasocial.geo_lat}}</p>  
+            <p  ng-show="datasocial.geo_lon" >Longtitude</p>
+             <p ng-show="datasocial.geo_lon" class="lead text-left text-primary" style="word-wrap: break-word;">{{datasocial.geo_lon}}</p> 
+             <p ng-show="datasocial.twitter_keywords" >Twitter Keywords</p>
+            <p ng-show="datasocial.twitter_keywords"  class="lead text-left text-primary" style="word-wrap: break-word;">{{datasocial.twitter_keywords}}</p> 
+             <p ng-show="datasocial.twitter_hastags" >Twitter Hash Tags</p>
+             <p ng-show="datasocial.twitter_hastags" class="lead text-left text-primary" style="word-wrap: break-word;">{{datasocial.twitter_hastags}}</p>            
+         </div>
+
+         <div class="col-md-5" ng-show="taction == 'view'">
+                      <p>Created at</p>
+                      <p class="lead text-left text-primary">{{datasocial.created_at}}</p>
+                      
+                      <p>Processing Status</p>
+                      <p class="text-left text-primary" >
+                        <span class="label" ng-class="{'label-warning': datasocial.status != '300', 'label-success': datasocial.status == '300','label-danger': datasocial.status == '400'}">{{getProcessStatus(datasocial.status)}}</span></p>
+                      <p> 
+                      <button type="submit" class="btn btn-primary"  ng-click="editT(datasocial.id)">
+                      <i class="fa fa-fw -circle-o fa-edit"></i>Edit</button>
+                      <button type="submit" class="btn btn-primary"  ng-click="deleteT(datasocial.id)">
+                      <i class="fa fa-fw -circle-o fa-trash"></i>Delete</button>    
+                      </p>
+         </div>
+
+           </div>
+           </div>
           </div>

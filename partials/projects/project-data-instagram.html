@@ -61,17 +61,19 @@
                      Fillout details Latitude!
                </p> -->
                <p><label><input type="radio" ng-checked="datasocial.geo_lat" ng-model="type" value="geo" /> Geo  </label>   <label><input type="radio" ng-checked="datasocial.instagram_tags" ng-model="type" value="hash" /> Hashtags  </label></p>
-               <div class="form-group col-md-4" ng-show="type =='geo' || datasocial.geo_lat" ng-class="{ 'has-error' : datainstagramForm.geo_lat.$invalid && !datainstagramForm.geo_lat.$pristine }">
+               <div class="form-group col-md-4" ng-show="type =='geo'" ng-class="{ 'has-error' : datainstagramForm.geo_lat.$invalid && !datainstagramForm.geo_lat.$pristine }">
                   <label class="control-label" for="exampleInputEmail1">Latitude</label>
-                  <input class="form-control geoset" id="exampleInputEmail1" type="text" name="geo_lat" ng-model="datasocial.geo_lat" ng-minlength="1" ng-maxlength="35" ins-geo-check="geoset" ng-disabled="insaction == 'edit'"  />
+                  <input class="form-control" id="geolat" type="text" name="geo_lat" ng-model="datasocial.geo_lat" ng-minlength="1" ng-maxlength="35"  ng-disabled="insaction == 'edit'" instagramval="geolon"  />
+                  <!-- ins-geo-check="geoset" -->
                   <p ng-show="datainstagramForm.geo_lat.$error.maxlength && datainstagramForm.geo_lat.$invalid && !datainstagramForm.geo_lat.$pristine" class="help-block" >
                      Maximum length allowed is 35 !
                   </p>
 
                </div>
-               <div class="form-group col-md-4" ng-show="type =='geo' || datasocial.geo_lon"  ng-class="{ 'has-error' : datainstagramForm.geo_lon.$invalid && !datainstagramForm.geo_lon.$pristine }">
+               <div class="form-group col-md-4" ng-show="type =='geo'"  ng-class="{ 'has-error' : datainstagramForm.geo_lon.$invalid && !datainstagramForm.geo_lon.$pristine }">
                   <label class="control-label" for="exampleInputEmail1">Longitude</label>
-                  <input class="form-control geoset" id="exampleInputEmail1" type="text" name="geo_lon" ng-model="datasocial.geo_lon" ng-minlength="1" ng-maxlength="35" ins-geo-check="geoset" ng-disabled="insaction == 'edit'" />
+                  <input class="form-control" id="geolon" type="text" name="geo_lon" ng-model="datasocial.geo_lon" ng-minlength="1" ng-maxlength="35"  ng-disabled="insaction == 'edit'" instagramval="geolat"  />
+                  <!-- ins-geo-check="geoset" -->
                   <p ng-show="datainstagramForm.geo_lon.$error.maxlength && datainstagramForm.geo_lon.$invalid && !datainstagramForm.geo_lon.$pristine" class="help-block" >
                      Maximum length allowed is 35 !
                   </p>

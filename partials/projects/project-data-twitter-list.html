@@ -14,14 +14,14 @@
                </div>
                <div class="col-md-1 ">
                             <div class="form-group">
-                                 <input type="number" min="1" max="100" class="form-control input-sm" ng-model="pageSize"  />
+                                 <input type="number" min="1" max="100" class="form-control input-sm" ng-model="tpageSize"  />
                             </div>
                 </div>
             </div>
             <table class="table table-bordered table-condensed table-hover table-striped">
-              <tbody dir-paginate="socialTwitter in datasocials| orderBy:sortKey:reverse|filter:search|itemsPerPage:pageSize" current-page="currentPage" pagination-id="twitter">
+              <tbody dir-paginate="socialTwitter in datasocials| orderBy:sortKey:reverse|filter:search|itemsPerPage:tpageSize" current-page="tcurrentPage" pagination-id="twitter">
                 <tr>
-                  <td>{{ ($index + 1) + (currentPage - 1) * pageSize}}</td>
+                  <td>{{ ($index + 1) + (tcurrentPage - 1) * tpageSize}}</td>
                   <td>{{socialTwitter.collection_name}}</td>
                   <td>
                     <span class="label label-success">Valid</span>
@@ -30,10 +30,10 @@
                     <span class="label label-warning">In Progress</span>
                   </td>
                   <td>{{socialTwitter.created_at}}</td>
-                  <td>
-                    <a href="#" class="btn  btn-md"><i class="fa fa-fw fa-eye"></i>&nbsp;View</a>
-                    <a href="#" class="btn  btn-md" ng-click="editT(socialTwitter.id)"><i class="fa fa-fw fa-edit"></i> Edit</a>
-                    <a href="#" class="btn  btn-md"><i class="fa fa-fw fa-trash"></i> Delete</a>
+                   <td>
+                    <a href="#data-sources" class="btn  btn-md" ng-click="viewT(socialTwitter.id)"><i class="fa fa-fw fa-eye"></i> View</a>
+                    <a href="#data-sources" class="btn  btn-md" ng-click="editT(socialTwitter.id)"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                    <a href="#data-sources" class="btn  btn-md" ng-click="deleteT(socialTwitter.id)"><i class="fa fa-fw fa-trash"></i> Delete</a>
                   </td>
                 </tr>
                  
@@ -43,7 +43,7 @@
                   <th class="btn-xs">#</th>
                   <th class="btn-xs">Collection Name</th>
                   <th class="btn-xs">&nbsp;Status</th>
-                  <th class="btn-xs"> Processing Status</th>
+                  <th class="btn-xs" > Processing Status <a class="btn btn-default" ng-click="listSocials()"><i class="fa fa-fw fa-refresh" ></i></a></th>
                   <th class="btn-xs">Creation Time</th>
                   <th class="btn-xs">Actions</th>
                 </tr>

@@ -1,10 +1,17 @@
-$appconfig = {
-  "host":"http://52.74.156.37:3000",
-  "ssoserver":"http://52.74.156.37:7777/",
-  "ssoclient":"http://52.74.156.37/btinfoactivweb/home.html",
-  "ssologout":"http://52.74.156.37:7777/logout?service=http://52.74.156.37/btinfoactivweb/home.html",
+// $appconfig = {
+//   "host":"http://52.74.156.37:3000",
+//   "ssoserver":"http://52.74.156.37:7777/",
+//   "ssoclient":"http://52.74.156.37/btinfoactivweb/home.html",
+//   "ssologout":"http://52.74.156.37:7777/logout?service=http://52.74.156.37/btinfoactivweb/home.html",
 
-}; 
+// }; 
+$appconfig = {
+  "host":"http://localhost:3000",
+  "ssoserver":"http://localhost:7777/",
+  "ssoclient":"http://localhost/ui/home.html",
+  "ssologout":"http://localhost:7777/logout?service=http://localhost/ui/home.html",
+
+};
  var tabname;
 angular
 .module('btProduct', ['ngRoute','ngAnimate','ngCookies','tab-directives','project-directives']).config(function ($routeProvider) {
@@ -49,7 +56,15 @@ angular
                 }
           } 
          
-       })   
+       }).when('/search', { 
+        template: "<search></search><projectlist></projectlist>",
+        resolve: {
+        load: function (httpauth) {
+                 return httpauth;
+                }
+          } 
+         
+       })     
       .otherwise({
         redirectTo: '/',
         resolve: {
@@ -113,7 +128,7 @@ run.$inject = ['$rootScope' ,'$location' , '$cookieStore', '$timeout', '$http','
               var paramValue = getParameterByName('ticket')||"";
     
   if((angular.isUndefined(tgt) || tgt ===false) && tgt.length !=33){
-     $window.location.href = $appconfig.ssoserver +'login?service='+$appconfig.ssoclient;
+     //$window.location.href = $appconfig.ssoserver +'login?service='+$appconfig.ssoclient;
   }
 
   if(!angular.isUndefined(paramValue) && paramValue!="" && paramValue.length ==32){
@@ -125,7 +140,7 @@ run.$inject = ['$rootScope' ,'$location' , '$cookieStore', '$timeout', '$http','
 
                 var xauth =  decodeURI(getUser('bttoken')); 
                 xauth =  xauth.slice(1, -1); 
-            //    alert(xauth);
+             // alert(xauth);
                 if(!angular.isUndefined(xauth) || xauth ===false){
                   $http.defaults.headers.common['x-auth'] = xauth;
 
