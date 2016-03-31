@@ -57,12 +57,14 @@ angular.module('project-directives', ['angularUtils.directives.dirPagination','n
            
           if($scope.projectForm.$valid){
             if($scope.project.id == "" || $scope.project.id == undefined){
+              $scope.project.user_id = 4;
               ProjectsFactory.create($scope.project,function(response){ 
                  $scope.projects = ProjectsFactory.query();
                  $scope.project={};
                  $scope.reset();
               });
             }else{
+              $scope.project.user_id = 4;
               ProjectFactory.update($scope.project,function(response){ 
                  $scope.project={};
                  $scope.reset();

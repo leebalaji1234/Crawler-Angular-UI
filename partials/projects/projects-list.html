@@ -22,7 +22,7 @@
                           </div>
                        </div>
                     </div>
-                    <table class="table table-bordered table-condensed table-hover table-striped">
+                    <table class="table table-hover">
                         <tbody dir-paginate="project in projects| orderBy:sortKey:reverse|filter:search|itemsPerPage:pageSize" current-page="currentPage">
                             <tr>
                                 <td>{{ ($index + 1) + (currentPage - 1) * pageSize}}</td>
@@ -30,16 +30,7 @@
                                      
                                  </td>
                                  <td><i >{{project.project_description}}<i/></td>
-                                <td class="text-center">
-                                    <a href="#" ng-click="setSelectedProject(project.id,'dashboard')" title="Dashboard"   class="btn   btn-lg">
-                                        <i class="fa fa-fw fa-dashboard"></i>
-                                    </a>
-                                </td>
-                                <td class="text-center">
-                                    <a href="http://localhost/facetview" target="_blank" ng-click="setSelectedProject(project.id,'search')"   class="btn   btn-lg" title="Search" >
-                                        <i class="fa fa-fw fa-search"></i>
-                                    </a>
-                                </td>
+                               
                                 <td class="text-center">
                                     <a href="#domains" ng-click="setSelectedProject(project.id,'domains')"   class="btn   btn-lg" title="Domains" >
                                         <i class="fa fa-fw fa-clipboard"></i>
@@ -60,6 +51,17 @@
                                         <i class="fa fa-fw fa-code-fork"></i>
                                     </a>
                                 </td>
+                                <td class="text-center">
+                                    <a href="http://localhost/facetview" target="_blank" ng-click="setSelectedProject(project.id,'search')"   class="btn   btn-lg" title="Search" >
+                                        <i class="fa fa-fw fa-search"></i>
+                                    </a>
+                                </td>
+                                 <td class="text-center">
+                                    <a href="#" ng-click="setSelectedProject(project.id,'dashboard')" title="Dashboard"   class="btn   btn-lg">
+                                        <i class="fa fa-fw fa-dashboard"></i>
+                                    </a>
+                                </td>
+                                
                                 <td class="text-center">
                                     <a href="#" ng-click="setSelectedProject(project.id,'reports')" class="btn   btn-lg" title="Reports" >
                                         <i class="fa fa-fw fa-bar-chart"></i>
@@ -82,13 +84,14 @@
                                 <th class="btn-xs text-center">Project Description
                                      
                                      
-                                </th>
-                                <th class="btn-xs text-center">Dashboard</th>
-                                <th class="btn-xs text-center">Search</th>
+                                </th> 
+                                
                                 <th class="btn-xs text-center">Domains</th>
                                 <th class="btn-xs text-center">Ontologies</th>
                                 <th class="btn-xs text-center">Data</th>
                                 <th class="btn-xs text-center">Tools</th>
+                                <th class="btn-xs text-center">Search</th>
+                                <th class="btn-xs text-center">Dashboard</th>
                                 <th class="btn-xs text-center">Reports</th>
                                 <th class="btn-xs text-center">Actions</th>
                             </tr>

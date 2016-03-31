@@ -24,7 +24,7 @@
                   <td>{{ ($index + 1) + (webcurrentPage - 1) * webpageSize}}</td>
                   <td class="text-center">{{web.url_collection_name}}</td>
                   <td class="text-center">
-                    <span class="label label-warning">In Progress</span>
+                     <span class="label " ng-class="{'label-warning': web.status != '300', 'label-success': web.status == '300','label-danger': web.status == '400'}">{{getProcessStatus(web.status)}}</span>
                   </td>
                   <td class="text-center">{{web.created_at}}</td>
                   <td class="text-center">
@@ -41,7 +41,7 @@
                   <th class="btn-xs text-center" ng-click="sortweb('url_collection_name')" >Collection Name
                     <i class="fa fa-fw -circle-o fa-angle-down"   ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></i>
                   </th>
-                  <th class="btn-xs text-center">Processing Status</th>
+                  <th class="btn-xs" > Processing Status <a class="btn btn-default" ng-click="listWebs()"><i class="fa fa-fw fa-refresh" ></i></a></th>
                   <th class="btn-xs text-center" >Creation Time</th>
                   <th class="btn-xs text-center">Actions</th>
                 </tr>

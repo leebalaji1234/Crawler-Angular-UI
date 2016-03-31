@@ -128,7 +128,7 @@ run.$inject = ['$rootScope' ,'$location' , '$cookieStore', '$timeout', '$http','
               var paramValue = getParameterByName('ticket')||"";
     
   if((angular.isUndefined(tgt) || tgt ===false) && tgt.length !=33){
-     //$window.location.href = $appconfig.ssoserver +'login?service='+$appconfig.ssoclient;
+     // $window.location.href = $appconfig.ssoserver +'login?service='+$appconfig.ssoclient;
   }
 
   if(!angular.isUndefined(paramValue) && paramValue!="" && paramValue.length ==32){
